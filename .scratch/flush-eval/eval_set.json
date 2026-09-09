@@ -1,0 +1,22 @@
+[
+  {"query": "ok that's everything for tonight, flush", "should_trigger": true},
+  {"query": "before we close out, capture this session so it's not lost", "should_trigger": true},
+  {"query": "save what we decided about the retry backoff and the queue name before you go", "should_trigger": true},
+  {"query": "write down what we figured out before we stop, I don't want to re-explain the auth tradeoffs next time", "should_trigger": true},
+  {"query": "I'm about to close my laptop for the night, make sure none of this thinking about the caching strategy disappears", "should_trigger": true},
+  {"query": "we're wrapping up here — can you make sure future sessions know why we picked postgres over dynamo", "should_trigger": true},
+  {"query": "quick, before I lose the terminal — jot down the three things we just agreed on for the rate limiter", "should_trigger": true},
+  {"query": "that's a wrap for today, let's make sure this doesn't get lost like last time", "should_trigger": true},
+  {"query": "pause here and persist what we've learned about the flaky test before we move to a new task", "should_trigger": true},
+  {"query": "flush this conversation into the repo, we covered a lot of ground on the pricing model", "should_trigger": true},
+  {"query": "flush the redis cache before you rerun the benchmark, the old keys are stale", "should_trigger": false},
+  {"query": "can you flush stdout after each write, the log lines are buffering weirdly", "should_trigger": false},
+  {"query": "add a `db.flush()` call after the bulk insert in the migration script", "should_trigger": false},
+  {"query": "commit these changes with a message summarizing what we decided about the schema", "should_trigger": false},
+  {"query": "write our decisions about the API versioning into DECISIONS.md", "should_trigger": false},
+  {"query": "can you write down what we figured out about this bug in a comment above the fix", "should_trigger": false},
+  {"query": "save the config we just discussed to config/production.yaml", "should_trigger": false},
+  {"query": "document the caching decision we made earlier this week in the architecture doc", "should_trigger": false},
+  {"query": "can you export this whole chat as a transcript file so I can send it to my manager", "should_trigger": false},
+  {"query": "save what we decided to settings.json — turn off the deprecation warnings and bump the timeout to 30s", "should_trigger": false}
+]
