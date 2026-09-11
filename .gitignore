@@ -63,3 +63,11 @@ Thumbs.db
 *.sqlite
 *.sqlite3
 *.db
+
+# Impeccable session-local artifacts (durable ones like design.json and
+# surfaces/ stay tracked)
+.impeccable/hook.cache.json
+.impeccable/questions/
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/

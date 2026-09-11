@@ -1,0 +1,186 @@
+.tag {
+  --tag-rotate: 0deg;
+  --tag-delay: 0ms;
+  position: relative;
+  width: 100%;
+  max-width: 21rem;
+  margin-left: auto;
+  transform: rotate(var(--tag-rotate)) translateY(-14px);
+  opacity: 0;
+  animation: tag-settle 640ms cubic-bezier(0.16, 1, 0.3, 1) var(--tag-delay) forwards;
+  transition: transform 220ms ease;
+}
+
+.tag:hover {
+  transform: rotate(calc(var(--tag-rotate) * 0.4)) translateY(-4px);
+}
+
+.tag:hover .tagBody {
+  box-shadow: var(--shadow-tag), 0 0 0 1px rgba(43, 43, 40, 0.06);
+}
+
+.tagBody {
+  padding: 1.5rem 1.35rem 1.25rem;
+  background: var(--color-kraft);
+  clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);
+  box-shadow: var(--shadow-tag);
+  transition: box-shadow 220ms ease;
+}
+
+@keyframes tag-settle {
+  0% {
+    opacity: 0;
+    transform: rotate(calc(var(--tag-rotate) * 3)) translateY(-26px);
+  }
+  65% {
+    opacity: 1;
+    transform: rotate(calc(var(--tag-rotate) * -0.6)) translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(var(--tag-rotate)) translateY(0);
+  }
+}
+
+.grommet {
+  position: absolute;
+  top: -0.9rem;
+  left: -0.55rem;
+  width: 2.1rem;
+  height: 1.7rem;
+  color: var(--color-steel);
+}
+
+.wire {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hole {
+  position: absolute;
+  bottom: 0.15rem;
+  left: 0.55rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-paper);
+  border: 2px solid var(--color-steel);
+}
+
+.amount {
+  position: absolute;
+  top: -1.3rem;
+  right: -1.1rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-violation);
+  color: var(--color-violation-dark);
+  background: var(--color-paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.62rem;
+  line-height: 1.15;
+  text-align: center;
+  transform: rotate(-9deg);
+}
+
+.amountLine {
+  display: block;
+  white-space: nowrap;
+}
+
+.tagHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--color-kraft-dark);
+}
+
+.category {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.ticketNo {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-ink-soft);
+}
+
+.quote {
+  margin: 0 0 1.1rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--color-kraft-dark);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--color-ink);
+  font-style: normal;
+}
+
+.quote::before {
+  content: "\201C";
+  margin-right: 0.05em;
+}
+
+.quote::after {
+  content: "\201D";
+  margin-left: 0.05em;
+}
+
+.stampRow {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  transform: rotate(-3deg);
+}
+
+.remove .stamp {
+  background: var(--color-violation);
+  color: var(--color-paper);
+  box-shadow: inset 0 0 0 1px rgba(246, 241, 228, 0.55);
+}
+
+.push .stamp {
+  color: var(--color-amber-dark);
+  border: 2px solid var(--color-amber);
+  background: transparent;
+}
+
+.clarify .stamp {
+  color: var(--color-clarify);
+  border: 2px dashed var(--color-clarify);
+  background: transparent;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .tag {
+    max-width: none;
+    margin-left: 0;
+  }
+}

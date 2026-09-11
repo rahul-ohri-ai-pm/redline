@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-11T17:37:42Z",
+  "title": "Design System: Redline",
+  "extensions": {
+    "colorMeta": {
+      "violation": {
+        "role": "primary",
+        "displayName": "Violation Red",
+        "canonical": "#c4362a",
+        "tonalRamp": ["#3a0f0a", "#5a1712", "#8f2820", "#c4362a", "#d65e4f", "#e4897d", "#f0b8ae", "#f9e2dc"]
+      },
+      "violation-dark": {
+        "role": "primary",
+        "displayName": "Violation Red Deep",
+        "canonical": "#8f2820",
+        "tonalRamp": ["#2a0a06", "#42120c", "#6b1e17", "#8f2820", "#b2493d", "#cf7368", "#e6a49b", "#f6d6d0"]
+      },
+      "amber": {
+        "role": "secondary",
+        "displayName": "Push-On Amber",
+        "canonical": "#d97f2e",
+        "tonalRamp": ["#3d2409", "#5c360e", "#835017", "#a85f1f", "#d97f2e", "#e8a662", "#f2c898", "#fae6cf"]
+      },
+      "amber-dark": {
+        "role": "secondary",
+        "displayName": "Push-On Amber Deep",
+        "canonical": "#a85f1f",
+        "tonalRamp": ["#2e1a09", "#472a0e", "#6b3f15", "#8a4f1c", "#a85f1f", "#c68142", "#dda874", "#f0d3ae"]
+      },
+      "clarify": {
+        "role": "secondary",
+        "displayName": "Clarify Graphite",
+        "canonical": "#8c8577",
+        "tonalRamp": ["#211f1a", "#332f28", "#4c473c", "#696455", "#8c8577", "#a9a397", "#c8c3b9", "#e6e3dc"]
+      },
+      "kraft": {
+        "role": "neutral",
+        "displayName": "Kraft",
+        "canonical": "#e8dcc0",
+        "tonalRamp": ["#2b2617", "#453d24", "#6b5f38", "#9a8a58", "#cdbd97", "#e8dcc0", "#f1e9d6", "#f8f3e8"]
+      },
+      "kraft-dark": {
+        "role": "neutral",
+        "displayName": "Kraft Deep",
+        "canonical": "#cdbd97",
+        "tonalRamp": ["#26210f", "#3d3618", "#5c5228", "#877749", "#a4926a", "#cdbd97", "#e0d4b8", "#f0e8d6"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "#f6f1e4",
+        "tonalRamp": ["#2e2b20", "#4a4633", "#726b4d", "#a89f79", "#d3c9a9", "#f6f1e4", "#faf7ee", "#fdfcf8"]
+      },
+      "paper-flat": {
+        "role": "neutral",
+        "displayName": "Paper Flat",
+        "canonical": "#efe7d4",
+        "tonalRamp": ["#2b2719", "#443c28", "#695c3c", "#988458", "#c4b587", "#efe7d4", "#f5efe2", "#faf6ee"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Graphite Ink",
+        "canonical": "#2b2b28",
+        "tonalRamp": ["#0e0e0d", "#181817", "#2b2b28", "#454541", "#65655f", "#8a8a82", "#b3b3a9", "#dedcd0"]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "canonical": "#55534a",
+        "tonalRamp": ["#161514", "#242320", "#39372f", "#55534a", "#726f63", "#928f80", "#b6b2a1", "#dcd8c8"]
+      },
+      "steel": {
+        "role": "neutral",
+        "displayName": "Steel",
+        "canonical": "#6b6b63",
+        "tonalRamp": ["#1c1c19", "#2e2e29", "#464642", "#5e5e57", "#6b6b63", "#8c8c83", "#b0b0a5", "#d6d6ca"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Big Shoulders Stencil)", "purpose": "Hero H1, section H2s, wordmark, tag category label. Never used for numerals, stamps, or dollar figures." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings below the hero H1." },
+      "body": { "displayName": "Body (Public Sans)", "purpose": "Lede copy, principle-band body, quoted clause text, lease facsimile paragraphs." },
+      "label": { "displayName": "Label/Mono (Courier Prime)", "purpose": "Ticket numbers, dollar figures, citation superscripts, bucket stamps, exclusion chips, header link, disclaimers." }
+    },
+    "shadows": [
+      { "name": "tag", "value": "0 10px 24px -12px rgba(43,43,40,0.45), 0 2px 6px -2px rgba(43,43,40,0.3)", "purpose": "Resting lift for the violation tag; hover shadow for the primary button." },
+      { "name": "tag-soft", "value": "0 6px 16px -10px rgba(43,43,40,0.35)", "purpose": "Resting shadow for the primary button, lighter than the tag shadow." }
+    ],
+    "motion": [
+      { "name": "tag-settle", "value": "640ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Per-tag settle animation (rotate + drop + fade in), staggered by an explicit per-tag delay so tags appear to wire on in ranked order." }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "900px" },
+      { "name": "mobile", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Violation-red CTA used for the header link's companion action and both hero/final CTAs.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#try\">Try it on a document</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: #c4362a; color: #f6f1e4; font-family: 'Big Shoulders Stencil', 'Arial Narrow', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; padding: 0.95rem 1.9rem; border-radius: 2px; box-shadow: 0 6px 16px -10px rgba(43,43,40,0.35); transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease; } .ds-btn-primary:hover { background: #8f2820; transform: translateY(-2px); box-shadow: 0 10px 24px -12px rgba(43,43,40,0.45), 0 2px 6px -2px rgba(43,43,40,0.3); } .ds-btn-primary:focus-visible { outline: 2px solid #c4362a; outline-offset: 3px; }"
+    },
+    {
+      "name": "Exclusion Chip",
+      "kind": "chip",
+      "refersTo": "chip-exclusion",
+      "description": "Static declarative chip listing a product exclusion. Flat, solid-bordered — deliberately not sharing any of the three bucket marks.",
+      "html": "<li class=\"ds-chip-exclusion\">Not legal advice</li>",
+      "css": ".ds-chip-exclusion { list-style: none; font-family: 'Courier Prime', 'Courier New', monospace; font-size: 0.85rem; color: #2b2b28; background: #f6f1e4; border: 1px solid #cdbd97; padding: 0.65rem 1.1rem; }"
+    },
+    {
+      "name": "Violation Tag",
+      "kind": "custom",
+      "refersTo": "stamp-remove",
+      "description": "The system's signature component: a notch-cornered kraft tag wired onto a flagged lease sentence, carrying a ticket number, quoted clause, and an exclusive bucket stamp (remove/modify shown here in red-fill).",
+      "html": "<article class=\"ds-tag ds-tag-remove\"><span class=\"ds-tag-grommet\" aria-hidden=\"true\"><svg viewBox=\"0 0 28 22\" width=\"28\" height=\"22\"><path d=\"M14 2 C 4 2, 2 10, 10 13\" fill=\"none\" stroke=\"#6b6b63\" stroke-width=\"1.4\" stroke-linecap=\"round\"/></svg><span class=\"ds-tag-hole\"></span></span><div class=\"ds-tag-body\"><header class=\"ds-tag-head\"><span class=\"ds-tag-category\">Hidden Fee</span><span class=\"ds-tag-ticket\">No. 04-01</span></header><blockquote class=\"ds-tag-quote\">In addition to Base Rent, Tenant agrees to pay a monthly amenity administration fee of $45.00.</blockquote><footer><span class=\"ds-tag-stamp\">Remove / Modify</span></footer></div></article>",
+      "css": ".ds-tag { position: relative; width: 100%; max-width: 21rem; } .ds-tag-body { padding: 1.5rem 1.35rem 1.25rem; background: #e8dcc0; clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px); box-shadow: 0 10px 24px -12px rgba(43,43,40,0.45), 0 2px 6px -2px rgba(43,43,40,0.3); } .ds-tag-grommet { position: absolute; top: -0.9rem; left: -0.55rem; width: 2.1rem; height: 1.7rem; color: #6b6b63; } .ds-tag-hole { position: absolute; bottom: 0.15rem; left: 0.55rem; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: #f6f1e4; border: 2px solid #6b6b63; } .ds-tag-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding-bottom: 0.6rem; margin-bottom: 0.75rem; border-bottom: 1px dashed #cdbd97; } .ds-tag-category { font-family: 'Big Shoulders Stencil', 'Arial Narrow', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: #55534a; } .ds-tag-ticket { font-family: 'Courier Prime', 'Courier New', monospace; font-size: 0.75rem; color: #55534a; } .ds-tag-quote { margin: 0 0 1.1rem; padding-left: 0.85rem; border-left: 2px solid #cdbd97; font-family: 'Public Sans', system-ui, sans-serif; font-size: 0.95rem; line-height: 1.5; color: #2b2b28; } .ds-tag-stamp { display: inline-block; font-family: 'Courier Prime', 'Courier New', monospace; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.03em; text-transform: uppercase; padding: 0.35rem 0.9rem; transform: rotate(-3deg); background: #c4362a; color: #f6f1e4; box-shadow: inset 0 0 0 1px rgba(246,241,228,0.55); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Code-Violation Tag",
+    "overview": "Redline's landing page is a building inspector's clipboard: a plain-paper lease sheet at rest, and violation tags wired onto its flagged sentences like carbon-numbered code-violation tickets. The world is paper-and-ink, not screen-and-dashboard — it explicitly refuses the SaaS-dashboard-in-browser-chrome arrangement every AI contract-review competitor ships. Density is calm and editorial at the copy level, then spikes into a stamped, ticketed register at the exact moment a lease sentence becomes a finding.\n\nOne color carries the aesthetic: violation-red covers roughly 30–60% of any surface where a flag is present, via the wordmark, the primary action, the \"Remove/Modify\" stamp fill, and the dollar-impact roundel — never as a background wash, always as a mark on kraft or paper. Kraft, paper white, and graphite ink hold the rest of the page quiet so the red reads as an inspector's mark, not a brand color running everywhere.\n\nTwo review rounds refined this build: a bucket-stamp typography error (using the display face instead of the intended mono/ticket face) and low ticket-number contrast against kraft were both corrected before ship, and the exclusion chips were changed off the clarify bucket's dashed-border mark so that mark stays exclusive to one meaning. The system below documents the corrected, shipped state.",
+    "keyCharacteristics": [
+      "One violation-red, used as a mark (stamp, wire, wordmark, roundel), never a field.",
+      "Three-tier typography: a stencilled display face for headers and the wordmark, a monospaced ticket face for every numbered/stamped/dollar value, and a humanist sans for body and quoted clause text.",
+      "A single reusable signature form — the notch-cornered, wire-and-grommet violation tag — carries the world's material metaphor; nothing else on the page imitates paper texture.",
+      "Per-bucket marks are permanent and exclusive: solid red fill (remove/modify), amber outline (push on), dashed graphite outline (clarify). No other element borrows any of these three marks."
+    ],
+    "rules": [
+      { "name": "The One Mark Rule", "body": "Violation red is a mark, not a background. It appears on stamps, wires, wordmarks, and roundels sitting on kraft or paper — it never fills a full section or card.", "section": "colors" },
+      { "name": "The Bucket-Mark Exclusivity Rule", "body": "Each of the three finding buckets owns one mark and one mark only: solid red fill for remove/modify, amber outline for push-on, dashed graphite outline for clarify. No other component — including generic tags, chips, or labels outside the tag component — reuses any of these three marks. The build shipped a violation of this rule in an early pass, where the exclusion chips borrowed the clarify bucket's dashed border; it was corrected before ship specifically to protect this rule.", "section": "colors" },
+      { "name": "The Numbers-Are-Mono Rule", "body": "Any character that is a ticket number, a dollar figure, a citation superscript, or a stamped classification word renders in Courier Prime, never in the display face. This was the build's first-review finding: the bucket stamps briefly shipped in the display face and were corrected to mono before ship — the corrected state is the standard, not the original.", "section": "typography" },
+      { "name": "The Soft-Lift Rule", "body": "All shadows in this system are diffuse and directionless (soft blur, no hard offset). A hard-edged, offset \"comic sticker\" shadow is not part of this world's vocabulary — the material is paper and stamps, not neobrutalist collage.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep violation-red to marks (stamps, wires, wordmark, roundel) covering roughly 30–60% of any surface that includes a flag — never a full-bleed field.",
+      "Do render every ticket number, dollar figure, and stamped bucket label in Courier Prime — this is load-bearing after the finish-review fix that corrected a display-face regression here.",
+      "Do keep the three bucket marks (solid red / amber outline / dashed graphite outline) exclusive to their bucket; no other chip, tag, or label borrows one of these three treatments.",
+      "Do use soft, diffuse, directionless shadows for all lift; the tag and tag-soft values are the system's only shadow vocabulary."
+    ],
+    "donts": [
+      "Don't introduce a hard-offset \"sticker\" shadow; this world's depth language is a diffuse paper lift, not a neobrutalist offset shadow.",
+      "Don't reuse the clarify bucket's dashed outline outside the clarify stamp — the exclusion chips did this in an earlier pass and were corrected specifically to protect the mark's exclusivity.",
+      "Don't render numerals or stamped labels in the display face; Big Shoulders Stencil is for headers, the wordmark, and the tag's category label only.",
+      "Don't extend this documented system to the authenticated app shell without a build pass: .impeccable/surfaces/app-app.md records a planned surface that inherits this world's tokens and marks (compressed further for daily use), but no screen in that shell has shipped yet, so it isn't documented here."
+    ]
+  }
+}

@@ -1,0 +1,339 @@
+.siteHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.75rem clamp(1.25rem, 5vw, 4rem);
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.4rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.wordmarkIcon {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.headerLink {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--color-ink-soft);
+  border-bottom: 1px solid var(--color-kraft-dark);
+  padding-bottom: 0.15rem;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.headerLink:hover {
+  color: var(--color-violation);
+  border-color: var(--color-violation);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+  max-width: 90rem;
+  margin: 0 auto;
+}
+
+.heroCopy {
+  max-width: 34rem;
+}
+
+.h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(2.3rem, 4.6vw, 3.6rem);
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+  margin: 0 0 1.4rem;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.lede {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+  max-width: 34ch;
+  margin: 0 0 2.1rem;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-violation);
+  color: var(--color-paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.95rem 1.9rem;
+  border-radius: 2px;
+  box-shadow: var(--shadow-tag-soft);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.ctaButton:hover {
+  background: var(--color-violation-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-tag);
+}
+
+.ctaButton:active {
+  transform: translateY(0);
+}
+
+.ctaNote {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-steel);
+}
+
+.heroDoc {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(15rem, 0.9fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.leaseSheet {
+  background: var(--color-paper-flat);
+  padding: 2rem clamp(1.25rem, 2.2vw, 2rem);
+  box-shadow: 0 1px 0 var(--color-kraft-dark) inset, 0 18px 36px -28px rgba(43, 43, 40, 0.55);
+  border: 1px solid var(--color-kraft-dark);
+}
+
+.leaseKicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-steel);
+  margin: 0 0 1.3rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--color-kraft-dark);
+}
+
+.leaseP {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--color-ink);
+  margin: 0 0 1.15rem;
+  max-width: 62ch;
+}
+
+.leaseP:last-child {
+  margin-bottom: 0;
+}
+
+.flagged {
+  position: relative;
+  background: none;
+  color: inherit;
+  padding: 0 0.05em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.flagRemove {
+  background: rgba(196, 54, 42, 0.16);
+}
+
+.flagPush {
+  background: rgba(217, 127, 46, 0.18);
+}
+
+.flagClarify {
+  background: rgba(140, 133, 119, 0.2);
+}
+
+.flagMarker {
+  font-family: var(--font-mono);
+  font-size: 0.62em;
+  font-weight: 700;
+  color: var(--color-ink-soft);
+  margin-left: 0.2em;
+  vertical-align: super;
+}
+
+.tagStack {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding-top: 0.5rem;
+}
+
+/* ---------- Principle band ---------- */
+
+.principle {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+  text-align: center;
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  letter-spacing: 0.015em;
+  color: var(--color-ink);
+  margin: 0 0 1.2rem;
+  text-wrap: balance;
+}
+
+.principleBody {
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: var(--color-ink-soft);
+  margin: 0 auto;
+  max-width: 56ch;
+}
+
+/* ---------- Exclusions ---------- */
+
+.exclusions {
+  background: var(--color-kraft);
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+}
+
+.exclusions .h2 {
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto 2.4rem;
+}
+
+.exclusionList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.exclusionTag {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  border: 1px solid var(--color-kraft-dark);
+  padding: 0.65rem 1.1rem;
+}
+
+/* ---------- Final CTA ---------- */
+
+.finalCta {
+  text-align: center;
+  padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 4rem);
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.finalCta .h2 {
+  margin-bottom: 1.8rem;
+}
+
+.disclaimer {
+  margin: 1.6rem auto 0;
+  max-width: 44ch;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-steel);
+}
+
+/* ---------- Footer ---------- */
+
+.siteFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem clamp(1.25rem, 5vw, 4rem) 2.5rem;
+  border-top: 1px solid var(--color-kraft-dark);
+}
+
+.footerNote {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-steel);
+  margin: 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCopy {
+    max-width: none;
+  }
+
+  .heroDoc {
+    grid-template-columns: 1fr;
+  }
+
+  .tagStack {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.75rem 1.25rem;
+    padding-top: 1rem;
+  }
+
+  .tagStack > * {
+    flex: 1 1 15rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .siteHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .ctaRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tagStack {
+    flex-direction: column;
+  }
+
+  .siteFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

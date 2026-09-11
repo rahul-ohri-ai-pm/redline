@@ -3,8 +3,9 @@
 Reads a contract, lease, freelance agreement, or terms of service and returns:
 plain-English summary, risk-ranked clauses each citing the exact source
 sentence, a drafted counter-offer per flagged clause, a Q&A box that answers
-only from the document, an editable list of the user's own red lines that
-drives the analysis, and a saved library of past documents.
+only from the document or state-standard reference data, an editable list
+of the user's own red lines that drives the analysis, and a saved library
+of past documents.
 
 ## Stack (settled, do not reconsider)
 
@@ -35,10 +36,16 @@ undermine the one invariant above, not just be out of scope.
 
 - Never state anything the document text doesn't support. If the text
   doesn't say it, the product doesn't claim it — this applies to summaries,
-  flags, counter-offers, and Q&A answers alike.
+  flags, and counter-offers. Q&A answers may also draw on state-standard
+  reference data (deposit caps, notice-period minimums, and similar), but
+  must refuse anything requiring more than that or the document text.
 - Secrets live only in `.env.local`. Never commit a key — treat any key that
   touches git history as already compromised and needing rotation.
 - Ask before adding a dependency.
+- All copy a user reads in this product, meaning the landing page, UI
+  labels, error messages and empty states, has to be run through the
+  humanizer skill before it is committed. Copy that reads as though a
+  model wrote it is a defect, not a matter of taste.
 
 ## Before deciding what to build
 
