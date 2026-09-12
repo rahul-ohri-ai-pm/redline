@@ -4,11 +4,13 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Next.js project builds and runs locally with no product routes yet.
-- [ ] A single OpenRouter client wrapper exists; no code calls a provider SDK directly (per CLAUDE.md's settled stack decision).
-- [ ] The wrapper is structured so tests can stub/mock a model call and assert on how the caller handles a given response, without making a real network call.
-- [ ] Test runner is configured and a trivial smoke test (stub a model response, assert the wrapper returns it) passes in CI.
+- [x] Next.js project builds and runs locally with no product routes yet.
+- [x] A single OpenRouter client wrapper exists; no code calls a provider SDK directly (per CLAUDE.md's settled stack decision).
+- [x] The wrapper is structured so tests can stub/mock a model call and assert on how the caller handles a given response, without making a real network call.
+- [x] Test runner is configured and a trivial smoke test (stub a model response, assert the wrapper returns it) passes in CI.
+
+Implemented: `lib/openrouter.ts` (`callModel({messages, jsonSchema?}, deps?)`), `lib/__tests__/openrouter.test.ts` (6 tests), `vitest.config.ts`, `npm test`/`npm run typecheck` scripts. Reads env only at call time so build/dev never requires the key. Injectable `deps.fetchFn`/`apiKey`/`model` is the test seam later tickets use.
 
 ## Comments
