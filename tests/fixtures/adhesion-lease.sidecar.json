@@ -1,0 +1,35 @@
+{
+  "document": "adhesion-lease.txt",
+  "clauses": [
+    {
+      "clauseType": "hidden-fee",
+      "sourceSentence": "In addition to the monthly rent described in Section 2, Tenant shall pay a recurring monthly convenience fee of $45 for use of the online tenant portal, which is the sole method by which rent payments are accepted without an additional processing surcharge.",
+      "expectedSeverity": "high"
+    },
+    {
+      "clauseType": "auto-renewal",
+      "sourceSentence": "This Agreement shall automatically renew for a successive term of twelve (12) months on the same terms and at the then-current market rent unless Tenant provides Landlord with written notice of intent to vacate no fewer than ninety (90) days before the end of the then-current term.",
+      "expectedSeverity": "high"
+    },
+    {
+      "clauseType": "deposit-deduction",
+      "sourceSentence": "Landlord may retain all or any portion of the security deposit for damages, cleaning, unpaid rent, or any other reason Landlord considers appropriate at its sole discretion.",
+      "expectedSeverity": "high"
+    },
+    {
+      "clauseType": "early-termination",
+      "sourceSentence": "Should Tenant need to terminate this Agreement before the end of the then-current term for any reason, Tenant shall be responsible for immediate payment of the entire remaining rent due for the balance of the term, in a single lump sum, regardless of how quickly Landlord is able to re-rent the Premises, in addition to a lease-break administrative fee of $500.",
+      "expectedSeverity": "high"
+    },
+    {
+      "clauseType": "right-of-entry",
+      "sourceSentence": "Landlord may enter the Premises at any time, for any purpose, including routine inspection, showing the unit to prospective tenants or buyers, or general maintenance, and no advance notice to Tenant is required.",
+      "expectedSeverity": "high"
+    },
+    {
+      "clauseType": "guest-restriction",
+      "sourceSentence": "Any guest present at the Premises for any portion of more than three days total in a calendar month, whether consecutive or not, shall be deemed an unauthorized occupant unless added to the lease and subject to a background check and an additional occupant fee of $200 per month, and Tenant shall be in default for any unregistered guest who exceeds this limit.",
+      "expectedSeverity": "medium"
+    }
+  ]
+}
