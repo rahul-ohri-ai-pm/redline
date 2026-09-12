@@ -13,11 +13,11 @@ Status: in progress. This file is updated as tickets complete.
 (filled in as we go)
 
 ## Ticket status
-- 01-project-and-model-call-scaffold: pending
-- 02-state-standard-data-interface: pending
+- fixtures (tests/fixtures/): done, committed fb0552e. Verified independently (substring match) rather than trusting subagent's self-report.
+- 01-project-and-model-call-scaffold: done, committed db670d1. `lib/openrouter.ts` + `lib/__tests__/openrouter.test.ts`. Verified independently: typecheck/test/build all pass on this machine.
+- 02-state-standard-data-interface: done, committed next. `lib/state-standards.ts` + fixtures for CA/TX/NY. Verified independently: typecheck/test pass (16 tests total).
 - 03-analysis-engine: pending
 - 04-qa-engine: pending
-- fixtures (tests/fixtures/): pending
 
 ## Verification gaps
 (filled in as we go)

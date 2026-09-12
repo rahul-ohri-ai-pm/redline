@@ -4,10 +4,12 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A typed shape for state-standard data is defined (deposit caps, notice-period minimums, banned fee types, typical amounts, keyed by state).
-- [ ] Fixture data exists for at least 2-3 states, covering enough fields to exercise the negotiability gate, opportunity-flag framing, and Q&A grounding in later tickets.
-- [ ] The interface is documented as a stand-in for a real dataset, not the real dataset — a follow-up ticket will be needed to source/build production data.
+- [x] A typed shape for state-standard data is defined (deposit caps, notice-period minimums, banned fee types, typical amounts, keyed by state).
+- [x] Fixture data exists for at least 2-3 states, covering enough fields to exercise the negotiability gate, opportunity-flag framing, and Q&A grounding in later tickets.
+- [x] The interface is documented as a stand-in for a real dataset, not the real dataset — a follow-up ticket will be needed to source/build production data.
+
+Implemented: `lib/state-standards.ts` (`StateStandard`, `getStateStandard(state)`), fixtures for CA/TX/NY chosen to differ meaningfully (CA/NY have deposit caps and banned fees, TX has neither). `lib/__tests__/state-standards.test.ts`, 10 tests.
 
 ## Comments
