@@ -8,27 +8,16 @@
  *
  * This is a separate, independently-tested seam from the analysis engine
  * (`lib/analysis-engine.ts` / ticket 03) per `.scratch/lease-analysis-engine
- * /spec.md`'s "Testing Decisions" — it defines its own minimal
- * `RenterProfile` and does not import or depend on the analysis engine's
- * types, fixtures, or sidecar files.
+ * /spec.md`'s "Testing Decisions" — it shares only the `RenterProfile` type
+ * (a plain data shape, not a fixture or test dependency) with the analysis
+ * engine, and does not import or depend on its fixtures or sidecar files.
  */
 
 import { callModel, type CallModelDeps } from "./openrouter";
 import type { StateStandard } from "./state-standards";
+import type { RenterProfile } from "./analysis/types";
 
-/**
- * Minimal renter profile this seam needs. State is the only field the Q&A
- * engine actually reads (to decide whether state-standard grounding is
- * even possible); the rest are accepted for shape-compatibility with the
- * analysis engine's renter profile but unused here.
- */
-export interface RenterProfile {
-  state: string;
-  pets?: boolean;
-  jointLease?: boolean;
-  renterType?: string;
-  redLines?: string[];
-}
+export type { RenterProfile };
 
 export type GroundedIn = "document" | "state-standard" | "both";
 
