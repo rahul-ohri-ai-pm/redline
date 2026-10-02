@@ -4,16 +4,16 @@
 
 **Blocked by:** 05
 
-**Status:** ready-for-agent
+**Status:** done
 
 Dependency: needs `pdfjs-dist`, approved by the owner. Add it in this ticket, not earlier.
 
-- [ ] A clean text PDF returns readable sections per page, with text unaltered by anything beyond the single normalization pass.
-- [ ] A PDF with one garbled page returns that page as an `UnreadableSection` (`text: null`, reason) and the other pages as readable; the renter is told which page was skipped.
-- [ ] A PDF with no text layer is refused with a clear message that scans aren't supported, and no guessed text is produced.
-- [ ] The readability heuristic errs toward marking a page unreadable.
-- [ ] Parsing happens in the browser; the PDF is never sent to the server.
-- [ ] Tests use PDF-specific fixtures (clean, one garbled page, no text layer) and assert on the returned `text` and `Section[]`.
-- [ ] Any user-facing copy has been through the humanizer skill.
+- [x] A clean text PDF returns readable sections per page, with text unaltered by anything beyond the single normalization pass.
+- [x] A PDF with one garbled page returns that page as an `UnreadableSection` (`text: null`, reason) and the other pages as readable; the renter is told which page was skipped.
+- [x] A PDF with no text layer is refused with a clear message that scans aren't supported, and no guessed text is produced.
+- [x] The readability heuristic errs toward marking a page unreadable.
+- [x] Parsing happens in the browser; the PDF is never sent to the server.
+- [x] Tests use PDF-specific fixtures (clean, one garbled page, no text layer) and assert on the returned `text` and `Section[]`.
+- [x] Any user-facing copy has been through the humanizer skill.
 
 ## Comments
