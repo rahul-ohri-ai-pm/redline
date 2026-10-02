@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { RedlineMark } from "../components/RedlineMark";
 import { getServerUser } from "@/lib/supabase/server";
+import { NavLinks } from "./NavLinks";
 import { signOut } from "./sign-out";
 import styles from "./shell.module.css";
 
@@ -15,11 +16,7 @@ export default async function AppShellLayout({ children }: { children: React.Rea
           <RedlineMark className={styles.wordmarkIcon} />
           <span>Redline</span>
         </Link>
-        <nav aria-label="Main" className={styles.nav}>
-          <Link href="/new" className={styles.navItem} aria-current="page">
-            New document
-          </Link>
-        </nav>
+        <NavLinks />
         {user && (
           <form action={signOut} className={styles.account}>
             <p className={styles.accountEmail}>Signed in as {user.email}</p>
