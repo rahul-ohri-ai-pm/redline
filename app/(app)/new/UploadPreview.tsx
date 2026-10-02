@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
+import { titleFromFileName } from "@/lib/documents/client";
 import { requestGate } from "@/lib/gate/client";
 import type { GateOutcome } from "@/lib/gate/types";
 import {
@@ -9,6 +10,7 @@ import {
   parsePastedText,
   type ParseOutcome,
 } from "@/lib/parse";
+import { AnalyzePanel, type ProfileStatus } from "./AnalyzePanel";
 import styles from "./UploadPreview.module.css";
 
 const REFUSED_LABEL = {
@@ -23,7 +25,7 @@ const REFUSED_LABEL = {
  * fetch, no form post. The previewed string is the frozen string that later
  * steps will receive.
  */
-export function UploadPreview() {
+export function UploadPreview({ profileStatus }: { profileStatus: ProfileStatus }) {
   const fileId = useId();
   const pasteId = useId();
   const [source, setSource] = useState<string | null>(null);
@@ -87,7 +89,7 @@ export function UploadPreview() {
       <p className={styles.lede}>
         Redline reads your file in this browser and never uploads it. Only the
         extracted text is sent to the server, to check what kind of document it
-        is. File types it can read: {supported}.
+        is and, once you analyze it, to run the analysis. File types it can read: {supported}.
       </p>
 
       <div className={styles.inputs}>
@@ -172,6 +174,16 @@ export function UploadPreview() {
                 <p className={styles.noticeTitle}>This looks like a residential lease</p>
                 <p>Redline reads documents like this one.</p>
               </div>
+            )}
+
+            {gate && gate !== "checking" && gate.status === "pass" && (
+              <AnalyzePanel
+                key={`${source}:${outcome.text.length}:${outcome.text.slice(0, 40)}`}
+                text={outcome.text}
+                sections={outcome.sections}
+                defaultTitle={source === "Pasted text" ? "" : titleFromFileName(source)}
+                profileStatus={profileStatus}
+              />
             )}
 
             {gate && gate !== "checking" && gate.status === "refused" && (
