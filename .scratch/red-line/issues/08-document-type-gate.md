@@ -4,14 +4,14 @@
 
 **Blocked by:** 05
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A residential lease passes the gate and proceeds.
-- [ ] A freelance agreement, a Terms of Service document and a non-document each get the "not supported yet" refusal.
-- [ ] A test asserts the analysis seam is never called for a refused document.
-- [ ] The classification call goes through the existing OpenRouter module, reads env only at call time, and is the mocked boundary in tests.
-- [ ] Only extracted text is sent; the original file is not.
-- [ ] A classification failure or malformed model response results in a visible error with a retry, never a silent pass.
-- [ ] Any user-facing copy has been through the humanizer skill.
+- [x] A residential lease passes the gate and proceeds.
+- [x] A freelance agreement, a Terms of Service document and a non-document each get the "not supported yet" refusal.
+- [x] A test asserts the analysis seam is never called for a refused document.
+- [x] The classification call goes through the existing OpenRouter module, reads env only at call time, and is the mocked boundary in tests.
+- [x] Only extracted text is sent; the original file is not.
+- [x] A classification failure or malformed model response results in a visible error with a retry, never a silent pass.
+- [x] Any user-facing copy has been through the humanizer skill.
 
 ## Comments

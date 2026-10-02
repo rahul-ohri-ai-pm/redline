@@ -104,7 +104,8 @@
 }
 
 .refusal,
-.skipped {
+.skipped,
+.pass {
   padding: 0.9rem 1rem;
   border: 1.5px solid var(--color-violation);
   background: var(--color-paper-flat);
@@ -115,8 +116,17 @@
   border-color: var(--color-amber);
 }
 
+.pass {
+  border-color: var(--color-ink);
+}
+
+.refusal .button {
+  margin-top: 0.75rem;
+}
+
 .refusal p,
-.skipped p {
+.skipped p,
+.pass p {
   margin: 0.25rem 0 0;
 }
 

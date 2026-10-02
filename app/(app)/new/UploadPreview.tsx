@@ -1,6 +1,8 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
+import { requestGate } from "@/lib/gate/client";
+import type { GateOutcome } from "@/lib/gate/types";
 import {
   availableFileTypeLabels,
   parseFile,
@@ -8,6 +10,12 @@ import {
   type ParseOutcome,
 } from "@/lib/parse";
 import styles from "./UploadPreview.module.css";
+
+const REFUSED_LABEL = {
+  "freelance-agreement": "a freelance agreement",
+  "terms-of-service": "Terms of Service",
+  other: "something other than a lease",
+} as const;
 
 /**
  * Picks a file or takes pasted text, runs it through the `parseFile` seam,
@@ -22,6 +30,25 @@ export function UploadPreview() {
   const [outcome, setOutcome] = useState<ParseOutcome | null>(null);
   const [busy, setBusy] = useState(false);
   const [pasted, setPasted] = useState("");
+  const [gate, setGate] = useState<GateOutcome | "checking" | null>(null);
+  // Only the latest check may set state; an older answer for replaced text is dropped.
+  const gateRun = useRef(0);
+
+  async function runGate(text: string) {
+    const run = ++gateRun.current;
+    setGate("checking");
+    const result = await requestGate(text);
+    if (run === gateRun.current) setGate(result);
+  }
+
+  function handleOutcome(next: ParseOutcome) {
+    setOutcome(next);
+    if (next.ok) void runGate(next.text);
+    else {
+      gateRun.current++;
+      setGate(null);
+    }
+  }
 
   const supported = availableFileTypeLabels().join(", ");
 
@@ -30,15 +57,18 @@ export function UploadPreview() {
     if (!file) return;
     setBusy(true);
     setSource(file.name);
-    setOutcome(await parseFile(file));
+    gateRun.current++;
+    setGate(null);
+    const parsed = await parseFile(file);
     setBusy(false);
+    handleOutcome(parsed);
     // Let the same file be picked again after a change on disk.
     event.target.value = "";
   }
 
   function onPreviewPasted() {
     setSource("Pasted text");
-    setOutcome(parsePastedText(pasted));
+    handleOutcome(parsePastedText(pasted));
   }
 
   const skipped =
@@ -55,8 +85,9 @@ export function UploadPreview() {
     <div className={styles.page}>
       <h1 className={styles.h1}>Add a document</h1>
       <p className={styles.lede}>
-        Redline reads your file in this browser and doesn&rsquo;t upload it. Later
-        steps send only the extracted text. File types it can read: {supported}.
+        Redline reads your file in this browser and never uploads it. Only the
+        extracted text is sent to the server, to check what kind of document it
+        is. File types it can read: {supported}.
       </p>
 
       <div className={styles.inputs}>
@@ -129,6 +160,43 @@ export function UploadPreview() {
                     </li>
                   ))}
                 </ul>
+              </div>
+            )}
+
+            {gate === "checking" && (
+              <p className={styles.status}>Checking what kind of document this is&hellip;</p>
+            )}
+
+            {gate && gate !== "checking" && gate.status === "pass" && (
+              <div className={styles.pass} role="status">
+                <p className={styles.noticeTitle}>This looks like a residential lease</p>
+                <p>Redline reads documents like this one.</p>
+              </div>
+            )}
+
+            {gate && gate !== "checking" && gate.status === "refused" && (
+              <div className={styles.refusal} role="alert">
+                <p className={styles.noticeTitle}>
+                  Redline doesn&rsquo;t read this type of document yet
+                </p>
+                <p>
+                  This looks like {REFUSED_LABEL[gate.documentType]}. Redline only
+                  reads residential leases for now.
+                </p>
+              </div>
+            )}
+
+            {gate && gate !== "checking" && gate.status === "error" && (
+              <div className={styles.refusal} role="alert">
+                <p className={styles.noticeTitle}>Couldn&rsquo;t check the document type</p>
+                <p>{gate.message}</p>
+                <button
+                  type="button"
+                  className={styles.button}
+                  onClick={() => void runGate(outcome.text)}
+                >
+                  Retry
+                </button>
               </div>
             )}
 
