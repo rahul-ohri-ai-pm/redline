@@ -109,6 +109,12 @@ this positioning; see "What the research could not tell us."
     intake questionnaire.
 14. Past documents and their reports are saved to a library the renter can
     return to.
+15. The renter can delete a saved document, which removes its stored text
+    and report. Added after the first draft of this list, because stored
+    lease text is sensitive.
+16. The renter signs in with an email magic link before their first
+    analysis. Profile, red lines and library belong to that account;
+    there is no anonymous analysis.
 
 Nothing beyond this list is in scope for v1.
 
