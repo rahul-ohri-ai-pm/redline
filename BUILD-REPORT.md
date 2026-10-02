@@ -120,7 +120,7 @@ npm install
 npm run typecheck && npm test && npm run build
 npm run smoke
 ```
-Then: create the Supabase project per `docs/supabase-setup.md`, put `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local`, run `supabase/migrations/0001_profiles_and_red_lines.sql` then `0002_documents.sql`, set the three `SUPABASE_TEST_*` variables and run `npm test` to exercise the RLS tests, then `npm run dev` and click through sign-in, /profile, /new, /library.
+Then: create the Supabase project per `supabase/README.md`, put `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local`, run `supabase/migrations/0001_profiles_and_red_lines.sql` then `0002_documents.sql`, set the three `SUPABASE_TEST_*` variables and run `npm test` to exercise the RLS tests, then `npm run dev` and click through sign-in, /profile, /new, /library.
 
 
 ---
