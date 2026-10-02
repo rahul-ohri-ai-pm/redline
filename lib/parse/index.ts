@@ -3,11 +3,11 @@
  * engine's inputs. It runs in the browser and never sends the file anywhere.
  *
  * It picks a parser by file type from a registry. Each parser owns its own
- * readability checks. The DOCX parser is registered by its own ticket with
- * `registerParser`; until then DOCX is refused with a "not available yet"
- * message.
+ * readability checks. A type with no registered parser is refused with a
+ * "not available yet" message.
  */
 
+import { parseDocx } from "./docx";
 import { parsePdf } from "./pdf";
 import { parsePlainText, parsePlainTextString } from "./plain-text";
 import type { FileKind, FileParser, ParseInput, ParseOutcome } from "./types";
@@ -38,9 +38,13 @@ const SUPPORTED_TYPES_SENTENCE = "PDF, DOCX and plain text (.txt)";
 
 export type ParserRegistry = Partial<Record<FileKind, FileParser>>;
 
-const defaultRegistry: ParserRegistry = { text: parsePlainText, pdf: parsePdf };
+const defaultRegistry: ParserRegistry = {
+  text: parsePlainText,
+  pdf: parsePdf,
+  docx: parseDocx,
+};
 
-/** Registers the parser for a file type. Called by the PDF and DOCX modules. */
+/** Registers the parser for a file type. Used by tests to swap a parser. */
 export function registerParser(kind: FileKind, parser: FileParser): void {
   defaultRegistry[kind] = parser;
 }

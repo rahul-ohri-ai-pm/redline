@@ -4,15 +4,15 @@
 
 **Blocked by:** 05
 
-**Status:** ready-for-agent
+**Status:** done
 
 Dependency: needs `mammoth`, approved by the owner. Add it in this ticket, not earlier.
 
-- [ ] A clean DOCX returns readable sections with text unaltered by anything beyond the single normalization pass.
-- [ ] A DOCX with an unreadable block returns that block as an `UnreadableSection` (`text: null`, reason) and the rest as readable; the renter is told what was skipped.
-- [ ] The readability heuristic errs toward marking a block unreadable.
-- [ ] Parsing happens in the browser; the DOCX is never sent to the server.
-- [ ] Tests use DOCX-specific fixtures (clean, one unreadable block) and assert on the returned `text` and `Section[]`.
-- [ ] Any user-facing copy has been through the humanizer skill.
+- [x] A clean DOCX returns readable sections with text unaltered by anything beyond the single normalization pass.
+- [x] A DOCX with an unreadable block returns that block as an `UnreadableSection` (`text: null`, reason) and the rest as readable; the renter is told what was skipped.
+- [x] The readability heuristic errs toward marking a block unreadable.
+- [x] Parsing happens in the browser; the DOCX is never sent to the server.
+- [x] Tests use DOCX-specific fixtures (clean, one unreadable block) and assert on the returned `text` and `Section[]`.
+- [x] Any user-facing copy has been through the humanizer skill.
 
 ## Comments

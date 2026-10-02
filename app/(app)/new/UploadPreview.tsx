@@ -43,8 +43,13 @@ export function UploadPreview() {
 
   const skipped =
     outcome?.ok === true ? outcome.sections.filter((s) => !s.readable) : [];
-  // PDF sections are pages; text paragraphs are sections.
-  const unit = skipped.length > 0 && skipped.every((s) => s.id.startsWith("page-")) ? "page" : "section";
+  // PDF sections are pages, DOCX sections are paragraphs, text sections are paragraphs of pasted text.
+  const unit =
+    skipped.length > 0 && skipped.every((s) => s.id.startsWith("page-"))
+      ? "page"
+      : skipped.length > 0 && skipped.every((s) => s.id.startsWith("block-"))
+        ? "paragraph"
+        : "section";
 
   return (
     <div className={styles.page}>
@@ -118,7 +123,7 @@ export function UploadPreview() {
                   {skipped.map((s) => (
                     <li key={s.id}>
                       <span className={styles.sectionId}>
-                        {s.id.replace("-", " ")}
+                        {s.id.replace(/^block-/, "paragraph ").replace("-", " ")}
                       </span>
                       {!s.readable && ` ${s.reason}`}
                     </li>
