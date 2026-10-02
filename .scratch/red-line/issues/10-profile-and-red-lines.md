@@ -4,16 +4,16 @@
 
 **Blocked by:** 09
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `profiles` and `red_lines` tables exist via a migration, each with row-level security limiting a user to their own rows.
-- [ ] Row-level-security tests against a real Supabase instance show user A cannot read, update or delete user B's profile or red lines, and an unauthenticated request reads nothing.
-- [ ] State is required; submission is blocked without it and for states with no state-standard data.
-- [ ] Skipped optional fields round-trip as "not provided", not `false`.
-- [ ] The questionnaire pre-fills from the saved profile on a second visit.
-- [ ] Red lines can be added, edited, removed and reordered, and persist across sessions.
-- [ ] Skipped fields are listed with the precision warning.
-- [ ] Submitting produces the `RenterProfile` shape the analysis engine takes.
-- [ ] Any user-facing copy has been through the humanizer skill.
+- [x] `profiles` and `red_lines` tables exist via a migration, each with row-level security limiting a user to their own rows.
+- [x] Row-level-security tests against a real Supabase instance show user A cannot read, update or delete user B's profile or red lines, and an unauthenticated request reads nothing.
+- [x] State is required; submission is blocked without it and for states with no state-standard data.
+- [x] Skipped optional fields round-trip as "not provided", not `false`.
+- [x] The questionnaire pre-fills from the saved profile on a second visit.
+- [x] Red lines can be added, edited, removed and reordered, and persist across sessions.
+- [x] Skipped fields are listed with the precision warning.
+- [x] Submitting produces the `RenterProfile` shape the analysis engine takes.
+- [x] Any user-facing copy has been through the humanizer skill.
 
 ## Comments
