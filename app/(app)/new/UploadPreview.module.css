@@ -1,0 +1,156 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  letter-spacing: 0.015em;
+  line-height: 1.15;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.lede {
+  margin: 0;
+  max-width: 40rem;
+  line-height: 1.65;
+  color: var(--color-ink-soft);
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+.file {
+  font-family: inherit;
+  font-size: 0.95rem;
+  max-width: 100%;
+}
+
+.textarea {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 0.6rem 0.7rem;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 2px solid var(--color-kraft-dark);
+  border-radius: 2px;
+  resize: vertical;
+}
+
+.button {
+  background: var(--color-violation);
+  color: var(--color-paper);
+  border: 0;
+  border-radius: 2px;
+  padding: 0.6rem 1.2rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--color-violation-dark);
+}
+
+.button:disabled {
+  background: var(--color-steel);
+  cursor: not-allowed;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.status {
+  margin: 0;
+  color: var(--color-ink-soft);
+}
+
+.refusal,
+.skipped {
+  padding: 0.9rem 1rem;
+  border-left: 6px solid var(--color-violation);
+  background: var(--color-paper-flat);
+  line-height: 1.55;
+}
+
+.skipped {
+  border-left-color: var(--color-amber);
+}
+
+.refusal p,
+.skipped p {
+  margin: 0.25rem 0 0;
+}
+
+.noticeTitle {
+  font-weight: 700;
+  margin-top: 0 !important;
+}
+
+.skippedList {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.sectionId {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.hint {
+  margin: 0;
+  color: var(--color-ink-soft);
+}
+
+.preview {
+  margin: 0;
+  max-height: 32rem;
+  overflow: auto;
+  padding: 1rem 1.1rem;
+  background: var(--color-paper-flat);
+  border: 2px solid var(--color-kraft-dark);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,77 @@
+.shell {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.rail {
+  background: var(--color-kraft);
+  border-right: 2px solid var(--color-kraft-dark);
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.wordmarkIcon {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.navItem {
+  display: block;
+  padding: 0.55rem 0.7rem;
+  border-left: 4px solid transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.navItem[aria-current="page"] {
+  border-left-color: var(--color-violation);
+  background: var(--color-paper);
+}
+
+.pane {
+  padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
+  max-width: 62rem;
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .rail {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-right: 0;
+    border-bottom: 2px solid var(--color-kraft-dark);
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+  }
+  .nav {
+    flex-direction: row;
+  }
+}

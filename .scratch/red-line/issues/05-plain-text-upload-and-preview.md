@@ -4,14 +4,14 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A clean `.txt` file returns `{ text, sections }` with readable sections, and the renter sees the extracted text in a preview.
-- [ ] Normalization runs once; the previewed string is the string later handed to `analyzeDocument`.
-- [ ] A `.txt` file with garbled or control-character content produces an `UnreadableSection` with `text: null` and a reason, and the renter is told what couldn't be read before continuing. The heuristic errs toward marking a section unreadable.
-- [ ] An unsupported file type is refused with a message naming the supported types.
-- [ ] No network request carries the file; the browser only ever produces text.
-- [ ] Tests for the plain-text parser use their own fixtures and assert on the returned `text` and `Section[]`, not on heuristic internals.
-- [ ] Any user-facing copy has been through the humanizer skill.
+- [x] A clean `.txt` file returns `{ text, sections }` with readable sections, and the renter sees the extracted text in a preview.
+- [x] Normalization runs once; the previewed string is the string later handed to `analyzeDocument`.
+- [x] A `.txt` file with garbled or control-character content produces an `UnreadableSection` with `text: null` and a reason, and the renter is told what couldn't be read before continuing. The heuristic errs toward marking a section unreadable.
+- [x] An unsupported file type is refused with a message naming the supported types.
+- [x] No network request carries the file; the browser only ever produces text.
+- [x] Tests for the plain-text parser use their own fixtures and assert on the returned `text` and `Section[]`, not on heuristic internals.
+- [x] Any user-facing copy has been through the humanizer skill.
 
 ## Comments
