@@ -5,6 +5,7 @@ import { createSupabaseDocumentStore } from "@/lib/documents/supabase-store";
 import { loadReport, unansweredProfileFields } from "@/lib/library/load";
 import { BUCKET_LABEL, VERDICT_LABEL, formatSavedDate } from "@/lib/library/labels";
 import { createServerSupabase, requireUser } from "@/lib/supabase/server";
+import { DeleteButton } from "../DeleteButton";
 import styles from "../library.module.css";
 
 export const metadata: Metadata = {
@@ -148,6 +149,7 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
       </section>
 
       <p className={styles.note}>{report.disclaimer}</p>
+      <DeleteButton id={doc.id} title={doc.title} redirectTo="/library" />
     </div>
   );
 }

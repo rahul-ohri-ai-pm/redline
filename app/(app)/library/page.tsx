@@ -4,6 +4,7 @@ import { createSupabaseDocumentStore } from "@/lib/documents/supabase-store";
 import { listLibrary, type LibraryEntry } from "@/lib/library/load";
 import { BUCKET_LABEL, VERDICT_LABEL, formatSavedDate } from "@/lib/library/labels";
 import { createServerSupabase, requireUser } from "@/lib/supabase/server";
+import { DeleteButton } from "./DeleteButton";
 import styles from "./library.module.css";
 
 export const metadata: Metadata = {
@@ -43,7 +44,7 @@ export default async function LibraryPage() {
       ) : (
         <ul className={styles.list}>
           {entries.map((e) => (
-            <li key={e.id}>
+            <li key={e.id} className={styles.rowItem}>
               <Link href={`/library/${e.id}`} className={styles.row}>
                 <span className={styles.rowTitle}>{e.title}</span>
                 <span className={styles.rowMeta}>
@@ -69,6 +70,7 @@ export default async function LibraryPage() {
                   )}
                 </span>
               </Link>
+              <DeleteButton id={e.id} title={e.title} />
             </li>
           ))}
         </ul>

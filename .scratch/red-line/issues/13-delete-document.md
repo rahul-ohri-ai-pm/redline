@@ -4,12 +4,12 @@
 
 **Blocked by:** 12
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A delete action in the library removes the document and its stored text, with a confirmation step.
-- [ ] After deletion the document no longer appears in the list and cannot be opened by id.
-- [ ] A user cannot delete another user's document (row-level-security test).
-- [ ] `PRD.md` lists the delete action under "What the first version does".
-- [ ] Any user-facing copy (confirmation, errors) has been through the humanizer skill.
+- [x] A delete action in the library removes the document and its stored text, with a confirmation step.
+- [x] After deletion the document no longer appears in the list and cannot be opened by id.
+- [x] A user cannot delete another user's document (row-level-security test).
+- [x] `PRD.md` lists the delete action under "What the first version does".
+- [x] Any user-facing copy (confirmation, errors) has been through the humanizer skill.
 
 ## Comments
