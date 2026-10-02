@@ -164,3 +164,20 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+@media (max-width: 720px) {
+  .button {
+    min-height: 2.75rem;
+  }
+  .file {
+    width: 100%;
+    min-height: 2.75rem;
+  }
+  .refusal,
+  .skipped,
+  .pass,
+  .hint,
+  .status {
+    overflow-wrap: anywhere;
+  }
+}

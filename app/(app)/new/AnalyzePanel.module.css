@@ -91,3 +91,21 @@
   border: 1.5px solid var(--color-violation);
   background: var(--color-paper);
 }
+
+@media (max-width: 720px) {
+  .button,
+  .link {
+    min-height: 2.75rem;
+  }
+  .inline {
+    display: inline-block;
+    padding: 0.5rem 0;
+  }
+  .panel,
+  .refusal,
+  .skipped,
+  .pass,
+  .error {
+    overflow-wrap: anywhere;
+  }
+}
