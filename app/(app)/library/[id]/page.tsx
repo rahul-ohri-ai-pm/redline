@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseDocumentStore } from "@/lib/documents/supabase-store";
-import { loadReport, unansweredProfileFields } from "@/lib/library/load";
+import { loadReport } from "@/lib/library/load";
 import { formatSavedDate } from "@/lib/library/labels";
 import { createServerSupabase, requireUser } from "@/lib/supabase/server";
 import { buildReportView } from "@/lib/report/view-model";
@@ -58,10 +58,9 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
 
   const { document: doc, report } = result;
   const profile = doc.profileSnapshot;
-  const unanswered = unansweredProfileFields(profile);
   const saved = formatSavedDate(doc.createdAt);
 
-  const view = buildReportView(report);
+  const view = buildReportView(report, profile);
 
   return (
     <div className={styles.page}>
@@ -76,37 +75,41 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
       {back}
       <h1 className={styles.h1}>{doc.title}</h1>
       <p className={styles.rowMeta}>
-        Saved {saved} · {view.verdictLabel}
+        Saved {saved}
       </p>
 
-      <section className={styles.panel} aria-labelledby="summary">
-        <h2 id="summary" className={styles.h2}>
-          Summary
-        </h2>
-        <p>{view.summary}</p>
-        <p className={styles.note}>{view.disclaimer}</p>
-      </section>
+      <div className={rs.verdictRow}>
+        <section className={`${styles.panel} ${rs.verdictBox}`} aria-labelledby="summary">
+          <h2 id="summary" className={styles.h2}>
+            {view.verdictLabel}
+          </h2>
+          <p>{view.summary}</p>
+        </section>
+        <aside className={rs.disclaimer} aria-label="Not legal advice">
+          <span className={styles.label}>Not legal advice</span>
+          <p>{view.disclaimer}</p>
+        </aside>
+      </div>
 
       <section className={styles.panel} aria-labelledby="skipped">
         <h2 id="skipped" className={styles.h2}>
           Sections that weren&apos;t read
         </h2>
-        {report.skippedSections.length === 0 ? (
+        {view.skipped.length === 0 ? (
           <p>Every section was read.</p>
         ) : (
-          <ul className={styles.bullets}>
-            {report.skippedSections.map((s) => (
-              <li key={s.id}>
-                {s.id}: {s.reason}
-              </li>
-            ))}
-          </ul>
+          <>
+            <p className={styles.note}>These were not checked, so any flags below say nothing about them.</p>
+            <ul className={styles.bullets}>
+              {view.skipped.map((s) => (
+                <li key={s.id}>
+                  {s.id}: {s.reason}
+                </li>
+              ))}
+            </ul>
+          </>
         )}
-        {unanswered.length > 0 && (
-          <p className={styles.note}>
-            No answer was saved for {unanswered.join(", ")}, so the relevance ordering is less precise.
-          </p>
-        )}
+        {view.precisionNote && <p className={styles.note}>{view.precisionNote}</p>}
       </section>
 
       {view.groups.map((g) => (
@@ -137,17 +140,20 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
         </section>
       ))}
 
-      {report.opportunityFlags.length > 0 && (
-        <section className={styles.panel} aria-labelledby="opps">
+      {view.suggestions.length > 0 && (
+        <section className={rs.suggestions} aria-labelledby="opps">
           <h2 id="opps" className={styles.h2}>
-            Things you could ask for
+            Suggestions
           </h2>
           <p className={styles.note}>
-            General suggestions about what the document leaves out. None of these quote it.
+            These are ideas to raise with your landlord. Your document does not say any of this, so there is no quote to check.
           </p>
-          <ul className={styles.bullets}>
-            {report.opportunityFlags.map((o) => (
-              <li key={o.id}>{o.suggestion}</li>
+          <ul className={rs.suggestionList}>
+            {view.suggestions.map((o) => (
+              <li key={o.id} className={rs.suggestion}>
+                <span className={rs.suggestionTag}>Suggestion</span>
+                <p>{o.suggestion}</p>
+              </li>
             ))}
           </ul>
         </section>
@@ -157,13 +163,14 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
         <h2 id="profile" className={styles.h2}>
           Profile this report used
         </h2>
-        <ul className={styles.bullets}>
-          <li>State: {profile.state}</li>
-          {profile.pets !== undefined && <li>Pets: {profile.pets ? "yes" : "no"}</li>}
-          {profile.jointLease !== undefined && <li>Joint lease: {profile.jointLease ? "yes" : "no"}</li>}
-          {profile.renterType !== undefined && <li>Renter type: {profile.renterType}</li>}
-          {profile.redLines && profile.redLines.length > 0 && <li>Red lines: {profile.redLines.join("; ")}</li>}
-        </ul>
+        <dl className={rs.profileList}>
+          {view.profileRows.map((r) => (
+            <div key={r.label} className={rs.profileRow}>
+              <dt className={styles.label}>{r.label}</dt>
+              <dd>{r.value}</dd>
+            </div>
+          ))}
+        </dl>
         <p className={styles.note}>
           These are your answers as of {saved}. Changes you make to your profile later don&apos;t update this report
           unless you re-run it.

@@ -93,6 +93,107 @@
   color: var(--color-violation-dark);
 }
 
+/* Verdict and disclaimer share the first screenful, side by side on wide panes. */
+.verdictRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: stretch;
+}
+
+.verdictBox {
+  height: 100%;
+}
+
+.disclaimer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem 1.15rem;
+  border: 2px solid var(--color-ink);
+  background: var(--color-paper);
+}
+
+.disclaimer p {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Suggestions: dotted outline, kraft ground, no quote block. Reads as advice. */
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem 1.15rem;
+  border: 2px dotted var(--color-steel);
+  background: var(--color-kraft);
+}
+
+.suggestionList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.suggestion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+  padding: 0.7rem 0.9rem;
+  background: var(--color-paper);
+  border: 1.5px dotted var(--color-steel);
+}
+
+.suggestion p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.suggestionTag {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.5rem;
+  border: 1.5px dotted var(--color-ink-soft);
+  border-radius: 999px;
+  color: var(--color-ink-soft);
+}
+
+.profileList {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.profileRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.8rem;
+  align-items: baseline;
+}
+
+.profileRow dt {
+  min-width: 7rem;
+}
+
+.profileRow dd {
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .verdictRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (max-width: 480px) {
   .tallies {
     gap: 0.4rem;
