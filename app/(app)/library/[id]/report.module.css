@@ -1,0 +1,103 @@
+.tallies {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tally {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.5rem 0.7rem;
+  border: 2px solid var(--color-ink);
+  background: var(--color-paper-flat);
+}
+
+.tallyRemove {
+  border-color: var(--color-violation);
+}
+
+.tallyPush {
+  border-color: var(--color-amber-dark);
+}
+
+.tallyClarify {
+  border-color: var(--color-clarify);
+}
+
+.tallyCount {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.tallyLabel {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.groupCount {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+}
+
+/* Deprioritized: same content, dashed outline and softer ink. */
+.quiet {
+  border: 2px dashed var(--color-kraft-dark);
+  background: var(--color-paper);
+  color: var(--color-ink-soft);
+}
+
+.copyBox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+  align-items: center;
+}
+
+.copyBtn {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.8rem;
+  border: 1.5px solid var(--color-ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.copyBtn:hover,
+.copyBtn:focus-visible {
+  border-color: var(--color-violation);
+}
+
+.copyNote {
+  font-size: 0.88rem;
+  color: var(--color-violation-dark);
+}
+
+@media (max-width: 480px) {
+  .tallies {
+    gap: 0.4rem;
+  }
+  .tally {
+    padding: 0.4rem 0.5rem;
+  }
+}

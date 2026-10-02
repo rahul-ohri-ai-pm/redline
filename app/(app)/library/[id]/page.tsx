@@ -3,14 +3,23 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createSupabaseDocumentStore } from "@/lib/documents/supabase-store";
 import { loadReport, unansweredProfileFields } from "@/lib/library/load";
-import { BUCKET_LABEL, VERDICT_LABEL, formatSavedDate } from "@/lib/library/labels";
+import { formatSavedDate } from "@/lib/library/labels";
 import { createServerSupabase, requireUser } from "@/lib/supabase/server";
+import { buildReportView } from "@/lib/report/view-model";
 import { DeleteButton } from "../DeleteButton";
 import styles from "../library.module.css";
+import { CopyButton } from "./CopyButton";
+import rs from "./report.module.css";
 
 export const metadata: Metadata = {
   title: "Saved report - Redline",
 };
+
+const TALLY_CLASS = {
+  "remove-modify": rs.tallyRemove,
+  "push-on": rs.tallyPush,
+  clarify: rs.tallyClarify,
+} as const;
 
 const CHIP_CLASS = {
   "remove-modify": styles.chipRemove,
@@ -52,47 +61,81 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
   const unanswered = unansweredProfileFields(profile);
   const saved = formatSavedDate(doc.createdAt);
 
+  const view = buildReportView(report);
+
   return (
     <div className={styles.page}>
+      <ul className={rs.tallies} aria-label="Flags by action">
+        {view.tallies.map((t) => (
+          <li key={t.bucket} className={`${rs.tally} ${TALLY_CLASS[t.bucket]}`}>
+            <span className={rs.tallyCount}>{t.count}</span>
+            <span className={rs.tallyLabel}>{t.label}</span>
+          </li>
+        ))}
+      </ul>
       {back}
       <h1 className={styles.h1}>{doc.title}</h1>
       <p className={styles.rowMeta}>
-        Saved {saved} · {VERDICT_LABEL[report.verdict]}
+        Saved {saved} · {view.verdictLabel}
       </p>
 
       <section className={styles.panel} aria-labelledby="summary">
         <h2 id="summary" className={styles.h2}>
           Summary
         </h2>
-        <p>{report.verdictMessage}</p>
+        <p>{view.summary}</p>
+        <p className={styles.note}>{view.disclaimer}</p>
       </section>
 
-      {report.riskFlags.length > 0 && (
-        <section className={styles.page} aria-labelledby="flags">
-          <h2 id="flags" className={styles.h2}>
-            Flagged clauses
+      <section className={styles.panel} aria-labelledby="skipped">
+        <h2 id="skipped" className={styles.h2}>
+          Sections that weren&apos;t read
+        </h2>
+        {report.skippedSections.length === 0 ? (
+          <p>Every section was read.</p>
+        ) : (
+          <ul className={styles.bullets}>
+            {report.skippedSections.map((s) => (
+              <li key={s.id}>
+                {s.id}: {s.reason}
+              </li>
+            ))}
+          </ul>
+        )}
+        {unanswered.length > 0 && (
+          <p className={styles.note}>
+            No answer was saved for {unanswered.join(", ")}, so the relevance ordering is less precise.
+          </p>
+        )}
+      </section>
+
+      {view.groups.map((g) => (
+        <section key={g.bucket} className={rs.group} aria-labelledby={`bucket-${g.bucket}`}>
+          <h2 id={`bucket-${g.bucket}`} className={styles.h2}>
+            {g.label} <span className={rs.groupCount}>({g.flags.length})</span>
           </h2>
           <ol className={styles.flags}>
-            {report.riskFlags.map((f) => (
-              <li key={f.id} className={styles.flag}>
+            {g.flags.map((f) => (
+              <li key={f.id} className={`${styles.flag} ${f.deprioritized ? rs.quiet : ""}`}>
                 <div className={styles.flagHead}>
-                  <span className={`${styles.chip} ${CHIP_CLASS[f.bucket]}`}>{BUCKET_LABEL[f.bucket]}</span>
-                  {!f.relevant && <span className={styles.note}>Less relevant to your profile</span>}
+                  <span className={`${styles.chip} ${CHIP_CLASS[f.bucket]}`}>{f.bucketLabel}</span>
+                  {f.deprioritized && <span className={styles.note}>Less relevant to your profile</span>}
                 </div>
                 <p>{f.summary}</p>
-                <span className={styles.label}>Source sentence</span>
+                <span className={styles.label}>From your document</span>
                 <blockquote className={styles.quote}>{f.sourceSentence}</blockquote>
-                {f.bucket === "remove-modify" && (
+                {f.counterOffer !== undefined && (
                   <>
                     <span className={styles.label}>Counter-offer draft</span>
                     <p className={styles.counter}>{f.counterOffer}</p>
+                    <CopyButton text={f.counterOffer} />
                   </>
                 )}
               </li>
             ))}
           </ol>
         </section>
-      )}
+      ))}
 
       {report.opportunityFlags.length > 0 && (
         <section className={styles.panel} aria-labelledby="opps">
@@ -110,23 +153,6 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
         </section>
       )}
 
-      <section className={styles.panel} aria-labelledby="skipped">
-        <h2 id="skipped" className={styles.h2}>
-          Sections that weren&apos;t read
-        </h2>
-        {report.skippedSections.length === 0 ? (
-          <p>Every section was read.</p>
-        ) : (
-          <ul className={styles.bullets}>
-            {report.skippedSections.map((s) => (
-              <li key={s.id}>
-                {s.id}: {s.reason}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
       <section className={styles.panel} aria-labelledby="profile">
         <h2 id="profile" className={styles.h2}>
           Profile this report used
@@ -138,11 +164,6 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
           {profile.renterType !== undefined && <li>Renter type: {profile.renterType}</li>}
           {profile.redLines && profile.redLines.length > 0 && <li>Red lines: {profile.redLines.join("; ")}</li>}
         </ul>
-        {unanswered.length > 0 && (
-          <p className={styles.note}>
-            No answer was saved for {unanswered.join(", ")}, so the relevance ordering is less precise.
-          </p>
-        )}
         <p className={styles.note}>
           These are your answers as of {saved}. Changes you make to your profile later don&apos;t update this report
           unless you re-run it.
@@ -155,7 +176,6 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
         <p className={styles.note}>A re-run replaces this report. The current one isn&apos;t kept.</p>
       </section>
 
-      <p className={styles.note}>{report.disclaimer}</p>
       <DeleteButton id={doc.id} title={doc.title} redirectTo="/library" />
     </div>
   );

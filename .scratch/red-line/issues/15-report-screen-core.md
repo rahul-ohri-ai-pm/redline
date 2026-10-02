@@ -4,14 +4,14 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Grouping, ordering and bucket counts are derived from the saved report by pure functions, tested on fixture reports (adhesion lease with flags, a report with deprioritized flags) by asserting on the derived output.
-- [ ] Every flag on screen shows its exact source sentence; a deliberately corrupted stored sentence still blocks rendering and is logged.
-- [ ] A remove/modify flag's counter-offer can be copied; push-on and clarify flags show their ask instead of replacement text.
-- [ ] Deprioritized flags are visible and visually quieter.
-- [ ] Bucket tallies for the open document appear at the top of the working pane.
-- [ ] No model call happens on open.
-- [ ] Any user-facing copy has been through the humanizer skill.
+- [x] Grouping, ordering and bucket counts are derived from the saved report by pure functions, tested on fixture reports (adhesion lease with flags, a report with deprioritized flags) by asserting on the derived output.
+- [x] Every flag on screen shows its exact source sentence; a deliberately corrupted stored sentence still blocks rendering and is logged.
+- [x] A remove/modify flag's counter-offer can be copied; push-on and clarify flags show their ask instead of replacement text.
+- [x] Deprioritized flags are visible and visually quieter.
+- [x] Bucket tallies for the open document appear at the top of the working pane.
+- [x] No model call happens on open.
+- [x] Any user-facing copy has been through the humanizer skill.
 
 ## Comments
