@@ -62,3 +62,50 @@ export function titleFromFileName(name: string | null): string {
   const stem = dot > 0 ? base.slice(0, dot) : base;
   return stem.trim();
 }
+
+export type RerunResult =
+  | { status: "done"; id: string }
+  | { status: "signed-out" }
+  | { status: "no-profile" }
+  | { status: "error"; message: string };
+
+export const RERUN_ERROR_MESSAGE =
+  "The re-run didn't finish. Your earlier report is unchanged. Try again.";
+
+/** Asks the analyze route to re-run a saved document. Sends the id only. */
+export async function requestRerun(
+  documentId: string,
+  fetchFn: AnalyzeFetch = (url, init) => fetch(url, init),
+): Promise<RerunResult> {
+  try {
+    const res = await fetchFn("/api/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ documentId }),
+    });
+    const body = (await res.json().catch(() => null)) as {
+      id?: unknown;
+      error?: unknown;
+      code?: unknown;
+    } | null;
+    if (res.ok && typeof body?.id === "string") return { status: "done", id: body.id };
+    if (res.status === 401) return { status: "signed-out" };
+    if (body?.code === "no-profile") return { status: "no-profile" };
+    return {
+      status: "error",
+      message: typeof body?.error === "string" ? body.error : RERUN_ERROR_MESSAGE,
+    };
+  } catch {
+    return { status: "error", message: RERUN_ERROR_MESSAGE };
+  }
+}
+
+/**
+ * The saved document a profile edit should re-run, taken from the
+ * `?rerun=` value. Only a plain id is accepted, so the return path built
+ * from it (`/library/<id>`) is always internal.
+ */
+export function parseRerunTarget(value: string | string[] | undefined | null): string | null {
+  if (typeof value !== "string") return null;
+  return /^[A-Za-z0-9-]{1,64}$/.test(value) ? value : null;
+}

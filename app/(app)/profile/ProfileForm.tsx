@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useMemo, useState } from "react";
+import { requestRerun } from "@/lib/documents/client";
 import { saveProfile, type ProfileFormState } from "./actions";
 import { skippedFields } from "@/lib/profile/skipped";
 import type { ProfileAnswers, SavedProfile } from "@/lib/profile/types";
@@ -33,12 +35,17 @@ export function ProfileForm({
   renterTypes,
   maxRedLines,
   initial,
+  rerunId = null,
 }: {
   states: string[];
   renterTypes: string[];
   maxRedLines: number;
   initial: SavedProfile | null;
+  /** A saved document to re-run once the profile is saved. */
+  rerunId?: string | null;
 }) {
+  const router = useRouter();
+  const [rerun, setRerun] = useState<"idle" | "running" | { error: string }>("idle");
   const [result, formAction, pending] = useActionState<ProfileFormState, FormData>(saveProfile, {
     status: "idle",
   });
@@ -50,6 +57,31 @@ export function ProfileForm({
   const [lines, setLines] = useState<Line[]>(
     (initial?.redLines ?? []).map((l) => ({ key: nextKey(), id: l.id, text: l.text })),
   );
+
+  useEffect(() => {
+    if (!rerunId || result.status !== "saved") return;
+    let cancelled = false;
+    setRerun("running");
+    requestRerun(rerunId).then((r) => {
+      if (cancelled) return;
+      if (r.status === "done") {
+        router.push(`/library/${r.id}`);
+        router.refresh();
+      } else if (r.status === "signed-out") {
+        router.push("/sign-in");
+      } else {
+        setRerun({
+          error:
+            r.status === "no-profile"
+              ? "Save your profile first so Redline knows your state."
+              : r.message,
+        });
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [result, rerunId, router]);
 
   const uncovered = state === OTHER;
   const skipped = useMemo(() => {
@@ -223,11 +255,22 @@ export function ProfileForm({
       </fieldset>
 
       <div className={styles.submitRow}>
-        <button type="submit" className={styles.button} disabled={pending || uncovered || !state}>
-          {pending ? "Saving" : "Save profile"}
+        <button type="submit" className={styles.button} disabled={pending || rerun === "running" || uncovered || !state}>
+          {rerun === "running"
+            ? "Re-running"
+            : pending
+              ? "Saving"
+              : rerunId
+                ? "Save and re-run"
+                : "Save profile"}
         </button>
         <div aria-live="polite">
           {result.status === "saved" && <p className={styles.saved}>Saved.</p>}
+          {typeof rerun === "object" && (
+            <p role="alert" className={styles.error}>
+              {rerun.error} Your profile is saved. Use Save and re-run to try again.
+            </p>
+          )}
           {errors.form && (
             <p role="alert" className={styles.error}>
               {errors.form}
