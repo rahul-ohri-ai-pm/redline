@@ -121,3 +121,45 @@ npm run typecheck && npm test && npm run build
 npm run smoke
 ```
 Then: create the Supabase project per `docs/supabase-setup.md`, put `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local`, run `supabase/migrations/0001_profiles_and_red_lines.sql` then `0002_documents.sql`, set the three `SUPABASE_TEST_*` variables and run `npm test` to exercise the RLS tests, then `npm run dev` and click through sign-in, /profile, /new, /library.
+
+
+---
+
+# Third run: report screen and Q&A box (tickets 15-19)
+
+All of 15-19 are done, one commit each. After each, the orchestrator re-ran `npm run typecheck`, the full `npm test` and `npm run build` (no Supabase variables set). Final state: **250 tests passed, 12 skipped, build passes.** Tickets 18 and 19 ran in parallel (different files: layout CSS under `app/` vs `scripts/smoke.ts`); each saw one transient `.next/types` build failure that passed on rerun, most likely from the two builds colliding.
+
+| Ticket | What | Commit |
+|---|---|---|
+| 15 | Report screen core: view-model, bucketed flags, tallies, copy counter-offer | 168957c |
+| 16 | Disclaimer up top, skipped sections, snapshot, suggestions, verdict rule | d98e386 |
+| 17 | Q&A box and ask handler (`/api/ask`), quotes re-verified | c7c4a63 |
+| 18 | Phone-width layout, menu drawer | 6160ed5 |
+| 19 | Smoke extended with real ask path | dfe65ca |
+
+## Decisions made without you
+
+- **Push-on and clarify flags show the engine's `summary` only.** The engine returns no separate ask/question field, so the UI invents none. Spec story 33 ("show the question or ask to raise") is therefore only met to the extent the summary does it. If you want a real ask, the engine has to produce one first.
+- **Verdict is derived from the flags** in the view-model. "Largely standard" shows only with zero risk flags, zero suggestions and an engine verdict of largely-standard. If a stored report contradicts itself, the view uses the standing message for the verdict it shows.
+- **Ask handler converts two engine refusals to errors:** `citation-could-not-be-verified` and `model-response-invalid` come back as a 502, never as a boundary the renter might read as a real refusal. The unverified quote is logged as a BLOCKER. A document- or both-grounded answer with no quote is also an error.
+- **Q&A reads the state from the stored profile snapshot**, history is newest first and session-only, question capped at 500 characters. `/api/ask` requires a session (unlike `/api/gate`, which still has none).
+- **Mobile: drawer, not bottom nav.** Below 720px the rail becomes a top bar with a Menu button. A bottom bar can't hold the email and Sign out and would sit over the Q&A input. Reasoning is also under Comments in ticket 18.
+
+## Not verified
+
+- **Nothing was seen in a browser.** The 360px behaviour of ticket 18 is CSS reasoning only; the one test checks that controls have at least 44px min-height inside a phone media query. Someone should look at 360px once. At phone width the bucket tallies sit above the back link and title, so the verdict is not the first thing on screen; left as is.
+- The report, library and Q&A screens need Supabase, so none rendered real saved data. `/api/ask` has never run against a real database.
+- The 12 gated RLS tests still have not run (see the second-run section).
+
+## Real-model runs
+
+`npm run smoke` (twice, with a key present): `risks-found`, 19 flags then 13 flags, every citation verified. Earlier runs gave 1 and 16 flags on the same fixture, so flag count varies widely from run to run. The ask path: the answerable question (convenience fee) returned a document-grounded answer with the $45 fee and two quotes, both verified; "Should I sign this lease?" was refused with reason `general-advice-not-grounded`. The refusal wording is stilted ("isn't something a source can back up"); that text comes from the Q&A engine.
+
+## Run these first
+
+```
+npm install
+npm run typecheck && npm test && npm run build
+npm run smoke
+```
+Then the Supabase steps from the second-run section, and look at /library/<id> on a phone-width window.
