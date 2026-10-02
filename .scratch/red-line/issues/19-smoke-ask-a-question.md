@@ -4,10 +4,10 @@
 
 **Blocked by:** 17
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] With a key set, the script prints one answer with its grounding and verified quotes, and one refusal.
-- [ ] A quoted sentence that does not verify makes the script exit non-zero.
-- [ ] With no key set, the ask path is skipped with a clear message and the rest of the script is unchanged.
+- [x] With a key set, the script prints one answer with its grounding and verified quotes, and one refusal.
+- [x] A quoted sentence that does not verify makes the script exit non-zero.
+- [x] With no key set, the ask path is skipped with a clear message and the rest of the script is unchanged.
 
 ## Comments
