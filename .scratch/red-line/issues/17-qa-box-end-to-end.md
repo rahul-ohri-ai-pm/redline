@@ -4,15 +4,15 @@
 
 **Blocked by:** 15
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The ask route requires a session, accepts only a document id and a question, and another user's document id returns not-found.
-- [ ] An answerable question returns an answer whose quoted sentences are found verbatim in the stored text.
-- [ ] An unanswerable factual question and a general-advice question each return a refusal.
-- [ ] A fabricated quoted sentence from the model becomes an error and is never shown (blocking test).
-- [ ] A model failure returns an error distinct from a refusal, and the box offers a retry.
-- [ ] The box shows grounding and quotes, session-only history, and a wait state; nothing is stored.
-- [ ] Handler tests use an injected session, store and model stub built from the sidecar fixtures; no key is needed.
-- [ ] Any user-facing copy has been through the humanizer skill.
+- [x] The ask route requires a session, accepts only a document id and a question, and another user's document id returns not-found.
+- [x] An answerable question returns an answer whose quoted sentences are found verbatim in the stored text.
+- [x] An unanswerable factual question and a general-advice question each return a refusal.
+- [x] A fabricated quoted sentence from the model becomes an error and is never shown (blocking test).
+- [x] A model failure returns an error distinct from a refusal, and the box offers a retry.
+- [x] The box shows grounding and quotes, session-only history, and a wait state; nothing is stored.
+- [x] Handler tests use an injected session, store and model stub built from the sidecar fixtures; no key is needed.
+- [x] Any user-facing copy has been through the humanizer skill.
 
 ## Comments

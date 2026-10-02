@@ -9,6 +9,7 @@ import { buildReportView } from "@/lib/report/view-model";
 import { DeleteButton } from "../DeleteButton";
 import styles from "../library.module.css";
 import { CopyButton } from "./CopyButton";
+import { QaBox } from "./QaBox";
 import rs from "./report.module.css";
 
 export const metadata: Metadata = {
@@ -182,6 +183,8 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
         </p>
         <p className={styles.note}>A re-run replaces this report. The current one isn&apos;t kept.</p>
       </section>
+
+      <QaBox documentId={doc.id} />
 
       <DeleteButton id={doc.id} title={doc.title} redirectTo="/library" />
     </div>
