@@ -3,7 +3,7 @@
  * banned/restricted fee types, and typical amounts, per state.
  *
  * This is a data dependency both engine seams consume (see
- * `.scratch/lease-analysis-engine/spec.md`): the analysis engine reads it
+ * `.scratch/red-line/spec.md`): the analysis engine reads it
  * for the negotiability gate (a clause matching a statutory minimum isn't
  * negotiable, however one-sided it feels) and for opportunity-flag framing
  * (suggesting something more favorable than the document's term but still

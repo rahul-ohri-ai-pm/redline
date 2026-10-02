@@ -7,7 +7,7 @@
  * this"-style advice).
  *
  * This is a separate, independently-tested seam from the analysis engine
- * (`lib/analysis-engine.ts` / ticket 03) per `.scratch/lease-analysis-engine
+ * (`lib/analysis-engine.ts` / ticket 03) per `.scratch/red-line
  * /spec.md`'s "Testing Decisions" — it shares only the `RenterProfile` type
  * (a plain data shape, not a fixture or test dependency) with the analysis
  * engine, and does not import or depend on its fixtures or sidecar files.

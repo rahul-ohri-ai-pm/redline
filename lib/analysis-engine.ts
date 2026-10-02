@@ -1,6 +1,6 @@
 /**
  * The analysis engine seam: `analyzeDocument(text, sections, renterProfile)
- * → Report`, described in `.scratch/lease-analysis-engine/spec.md`.
+ * → Report`, described in `.scratch/red-line/spec.md`.
  *
  * This is the single public entry point. It orchestrates, in order:
  *
