@@ -6,6 +6,7 @@ import styles from "./shell.module.css";
 
 const ITEMS = [
   { href: "/new", label: "New document" },
+  { href: "/library", label: "Library" },
   { href: "/profile", label: "Profile & red lines" },
 ];
 
