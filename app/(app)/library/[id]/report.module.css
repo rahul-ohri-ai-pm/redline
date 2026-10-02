@@ -202,3 +202,37 @@
     padding: 0.4rem 0.5rem;
   }
 }
+
+/* Phone width: tallies shrink so they sit above the verdict without crowding it. */
+@media (max-width: 480px) {
+  .tally {
+    padding: 0.35rem 0.5rem;
+  }
+  .tallyCount {
+    font-size: 1.35rem;
+  }
+  .tallyLabel {
+    font-size: 0.66rem;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 720px) {
+  .copyBtn {
+    min-height: 2.75rem;
+    padding: 0.4rem 1rem;
+  }
+  .profileRow dt {
+    min-width: 0;
+    flex-basis: 100%;
+  }
+  .profileRow dd {
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .suggestion p,
+  .disclaimer p {
+    overflow-wrap: anywhere;
+  }
+}

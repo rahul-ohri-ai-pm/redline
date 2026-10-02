@@ -118,6 +118,7 @@
 
 .lineActions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.3rem;
 }
 
@@ -212,4 +213,39 @@
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .button,
+  .small,
+  .secondary {
+    min-height: 2.75rem;
+  }
+  .small {
+    padding: 0.4rem 0.9rem;
+  }
+  .select,
+  .input {
+    min-height: 2.75rem;
+    font-size: 1rem;
+  }
+  .select {
+    min-width: 0;
+    width: 100%;
+  }
+  .group {
+    padding: 1rem 0.8rem 1.1rem;
+  }
+  .warning,
+  .blocker,
+  .hint,
+  .error {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

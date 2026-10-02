@@ -168,3 +168,22 @@
   border: 2px solid var(--color-violation);
   background: var(--color-paper);
 }
+
+@media (max-width: 720px) {
+  .submit,
+  .retry {
+    min-height: 2.75rem;
+    align-self: stretch;
+  }
+  .input {
+    font-size: 1rem; /* keeps iOS from zooming the page on focus */
+  }
+  .box {
+    padding: 0.9rem 0.8rem 1rem;
+  }
+  .entry p,
+  .error p,
+  .refusal p {
+    overflow-wrap: anywhere;
+  }
+}

@@ -279,3 +279,39 @@
   flex-direction: column;
   gap: 0.4rem;
 }
+
+@media (max-width: 720px) {
+  .deleteBtn,
+  .deleteConfirm {
+    min-height: 2.75rem;
+    padding: 0.4rem 1rem;
+  }
+  .cta,
+  .back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+  .flag,
+  .panel p,
+  .flag p,
+  .note,
+  .bullets {
+    overflow-wrap: anywhere;
+  }
+  .counter {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Chips drop under the title instead of squeezing it at phone width. */
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .chips {
+    grid-column: 1;
+    grid-row: auto;
+    justify-content: flex-start;
+  }
+}
