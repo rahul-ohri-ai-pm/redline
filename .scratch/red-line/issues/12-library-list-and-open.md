@@ -4,13 +4,13 @@
 
 **Blocked by:** 11
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The list shows only the signed-in user's documents, newest first, with title, date, state and verdict.
-- [ ] Opening a document shows the saved report with every flag's exact source sentence, the skipped sections, the disclaimer and the profile snapshot, with no model call.
-- [ ] A deliberately corrupted stored sentence blocks rendering and is logged.
-- [ ] An empty library shows a clear next step.
-- [ ] A user cannot open another user's document by id.
-- [ ] Any user-facing copy has been through the humanizer skill.
+- [x] The list shows only the signed-in user's documents, newest first, with title, date, state and verdict.
+- [x] Opening a document shows the saved report with every flag's exact source sentence, the skipped sections, the disclaimer and the profile snapshot, with no model call.
+- [x] A deliberately corrupted stored sentence blocks rendering and is logged.
+- [x] An empty library shows a clear next step.
+- [x] A user cannot open another user's document by id.
+- [x] Any user-facing copy has been through the humanizer skill.
 
 ## Comments
