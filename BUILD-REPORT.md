@@ -1,6 +1,6 @@
 # Build Report
 
-Status: **all four tickets in `.scratch/lease-analysis-engine/issues/` are done.** This build covers the full judgment layer (the two engine seams: `analyzeDocument` and `answerQuestion`) plus their shared infrastructure — not the surrounding upload/UI/auth/library surface, which the spec explicitly scopes to a separate future spec.
+Status: **all four tickets in `.scratch/red-line/issues/` are done.** This build covers the full judgment layer (the two engine seams: `analyzeDocument` and `answerQuestion`) plus their shared infrastructure — not the surrounding upload/UI/auth/library surface, which the spec explicitly scopes to a separate future spec.
 
 ## What's done
 
@@ -14,7 +14,7 @@ Status: **all four tickets in `.scratch/lease-analysis-engine/issues/` are done.
 | RenterProfile de-dup | done | `bea1a85` |
 | `npm run smoke` script | done | `0aebf1f` |
 
-Every ticket's Status line and acceptance checkboxes in `.scratch/lease-analysis-engine/issues/0N-*.md` are updated to `done`/`[x]`.
+Every ticket's Status line and acceptance checkboxes in `.scratch/red-line/issues/0N-*.md` are updated to `done`/`[x]`.
 
 Every commit above was independently re-verified in this session (not just trusted from the subagent's self-report): `npm run typecheck`, `npm test` (full suite, not just the new file), and `npm run build` were re-run after each ticket landed, and the highest-risk tests (fabricated-citation-drop, skipped-sections surfacing, verbatim sidecar-sentence matches) were grepped and read directly to confirm they assert real behavior rather than being decorative.
 
@@ -46,7 +46,7 @@ Full flag-by-flag output (clause type, bucket, confidence, source sentence, veri
 
 ## Everything not verified, and why
 
-- **Supabase**: no project exists yet (as instructed). `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY` were never set in this session, and per this build's scope (the two engine-seam tickets only — see `.scratch/lease-analysis-engine/spec.md`'s "Out of Scope": "The upload flow, questionnaire UI, Supabase schema, auth, and library storage... needs its own spec(s)"), **no Supabase code, sign-in, library, red-lines UI, or SQL migrations were built in this session at all.** This isn't a gap in this build — it's out of scope for the spec/tickets this session was given. A future spec covering the surrounding product surface (per the spec's own "Further Notes") will need to be written before that work can start, and CLAUDE.md's second open question (Supabase sign-in/library/red-lines against the real client, migrations under `supabase/migrations/`) remains genuinely unaddressed — there is no `supabase/` directory in this repo yet.
+- **Supabase**: no project exists yet (as instructed). `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY` were never set in this session, and per this build's scope (the two engine-seam tickets only — see `.scratch/red-line/spec.md`'s "Out of Scope": "The upload flow, questionnaire UI, Supabase schema, auth, and library storage... needs its own spec(s)"), **no Supabase code, sign-in, library, red-lines UI, or SQL migrations were built in this session at all.** This isn't a gap in this build — it's out of scope for the spec/tickets this session was given. A future spec covering the surrounding product surface (per the spec's own "Further Notes") will need to be written before that work can start, and CLAUDE.md's second open question (Supabase sign-in/library/red-lines against the real client, migrations under `supabase/migrations/`) remains genuinely unaddressed — there is no `supabase/` directory in this repo yet.
 - **OpenRouter reasoning-effort field name** (see decision #2 above) — implemented on a best guess, not verified against live OpenRouter docs.
 - **Judgment quality / accuracy of flags on a real lease corpus** — explicitly out of scope per the spec ("Validation of flag/bucket/ranking judgment against a real lease corpus, or any accuracy target for that judgment"). The one live smoke run above is a good sign (16/16 citations verified, buckets look sensible on manual read) but is not a substitute for that validation.
 - **UI/screen work**: none was done. This session built two pure-function engine seams (`lib/analysis-engine.ts`, `lib/qa-engine.ts`) with no product surface calling them yet. `app/` (the existing landing page) was untouched throughout, per every subagent's explicit instructions.
@@ -63,6 +63,6 @@ npm run smoke        # requires OPENROUTER_API_KEY + OPENROUTER_MODEL in .env.lo
 ```
 
 Then, when ready to scope the next spec (upload flow / Supabase / UI / library / red-lines):
-- Read `.scratch/lease-analysis-engine/spec.md`'s "Out of Scope" and "Further Notes" sections — they name exactly what's still needed.
+- Read `.scratch/red-line/spec.md`'s "Out of Scope" and "Further Notes" sections — they name exactly what's still needed.
 - The engine seams this build produced (`analyzeDocument`, `answerQuestion`) are ready to be called from that surface; their public types are exported from `lib/analysis-engine.ts` and `lib/qa-engine.ts`.
 - Sourcing a real state-standard dataset (currently `lib/state-standards.ts`'s CA/TX/NY fixture data, explicitly marked as placeholder, not legally authoritative) is the biggest concrete follow-up named in the spec.

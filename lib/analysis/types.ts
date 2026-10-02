@@ -2,7 +2,7 @@
  * Shared types for the analysis engine (`lib/analysis-engine.ts`).
  *
  * These mirror the vocabulary in `CONTEXT.md` and the shapes described in
- * `.scratch/lease-analysis-engine/spec.md`: action buckets, the relevance
+ * `.scratch/red-line/spec.md`: action buckets, the relevance
  * filter, opportunity flags, and partial extraction.
  */
 
