@@ -228,3 +228,54 @@
   font-size: 0.92rem;
   line-height: 1.6;
 }
+
+.deleteBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.deleteWarn {
+  margin: 0;
+  line-height: 1.5;
+  max-width: 36rem;
+}
+
+.deleteActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.deleteBtn,
+.deleteConfirm {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.8rem;
+  border: 1.5px solid var(--color-ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.deleteConfirm {
+  border-color: var(--color-violation);
+  background: var(--color-violation);
+  color: var(--color-paper);
+}
+
+.deleteBtn:disabled,
+.deleteConfirm:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.rowItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
