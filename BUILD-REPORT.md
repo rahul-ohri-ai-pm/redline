@@ -1,6 +1,6 @@
 # Build Report
 
-Status: **all four tickets in `.scratch/red-line/issues/` are done.** This build covers the full judgment layer (the two engine seams: `analyzeDocument` and `answerQuestion`) plus their shared infrastructure — not the surrounding upload/UI/auth/library surface, which the spec explicitly scopes to a separate future spec.
+Status: **all fourteen tickets in `.scratch/red-line/issues/` are done** (01-04 in the first run; 05-14 in the second run, see "Second run" at the end). This build covers the full judgment layer (the two engine seams: `analyzeDocument` and `answerQuestion`) plus their shared infrastructure — not the surrounding upload/UI/auth/library surface, which the spec explicitly scopes to a separate future spec.
 
 ## What's done
 
@@ -66,3 +66,58 @@ Then, when ready to scope the next spec (upload flow / Supabase / UI / library /
 - Read `.scratch/red-line/spec.md`'s "Out of Scope" and "Further Notes" sections — they name exactly what's still needed.
 - The engine seams this build produced (`analyzeDocument`, `answerQuestion`) are ready to be called from that surface; their public types are exported from `lib/analysis-engine.ts` and `lib/qa-engine.ts`.
 - Sourcing a real state-standard dataset (currently `lib/state-standards.ts`'s CA/TX/NY fixture data, explicitly marked as placeholder, not legally authoritative) is the biggest concrete follow-up named in the spec.
+
+
+---
+
+# Second run: upload, auth, library (tickets 05-14)
+
+All of 05-14 are done, one commit each, built one at a time. After each: `npm run typecheck`, full `npm test`, `npm run build` (no Supabase variables set) were re-run by the orchestrator. Final state: **211 tests passed, 12 skipped, build passes.**
+
+| Ticket | What | Commit |
+|---|---|---|
+| 05 | `parseFile` seam, plain-text parser, `/new` preview | 566d292 |
+| 06 | PDF parser, per-page readability (`pdfjs-dist`) | 099d186 |
+| 07 | DOCX parser, per-block readability (`mammoth`) | 90258cd |
+| 08 | Document-type gate (`/api/gate`, `runAnalysisIfLease`) | da43223 |
+| 09 | Magic-link sign-in (`@supabase/supabase-js`, `@supabase/ssr`) | 2bc6244 |
+| 10 | Questionnaire, profile, red lines, migration 0001 | 53df7d0 |
+| 11 | `/api/analyze`, save to `documents`, migration 0002 | 1e9d41b |
+| 12 | Library list and open, load-time citation re-check | 1ac14fb |
+| 13 | Delete with two-step confirm | 7a1b16e |
+| 14 | Re-run on a saved document | bb684ef |
+
+## Decisions made without you
+
+- Dependencies were the four your spec approved (`pdfjs-dist`, `mammoth`, `@supabase/supabase-js`, `@supabase/ssr`). No others were added.
+- Parsers: unreadable PDF pages, DOCX blocks and plain-text paragraphs are dropped from `text` (not just flagged), so a citation can never verify against garbled text. Picture-only DOCX paragraphs count as skipped blocks. A sentence spanning a PDF page break will not verify as a citation.
+- PDF parser uses the pdf.js legacy build (the standard build failed on Node 22.14).
+- The analyze route reads the saved profile and red lines server-side instead of accepting profile fields from the client. The body is exactly `{text, sections, title}`; a `profile` key gets a 400. Ask if you want an override path.
+- Re-run skips the document-type gate (the text was gated at first save).
+- `/api/gate` has no session check; `/api/analyze` does. Anyone can hit the gate and spend a model call. Consider adding a session check or rate limit.
+- `/new` is rendered per request (it reads the session); the `(app)` layout is `force-dynamic`.
+- Red lines capped at 25, 300 characters each. Renter types: individual, roommate, co-signer.
+- Design hook flagged thick side-stripe borders; replaced with full borders / a top bar. The app shell brief's "left-edge color bar" is only used for list-row chips, if at all.
+- PRD.md already had the delete (item 15) and sign-in (item 16) lines.
+
+## Not verified (Supabase missing, no browser run)
+
+- Migrations 0001 and 0002 have never been run. Policies are untested against a real database.
+- 12 real-RLS tests are written and skipped (need `SUPABASE_TEST_URL`, `SUPABASE_TEST_SERVICE_KEY`, `SUPABASE_TEST_ANON_KEY`). The tickets 10-13 criteria "RLS tests against a real instance" are therefore **not demonstrated**, only written.
+- Magic-link delivery, callback code exchange, session persistence, sign-out and the signed-in rail were never exercised. Only the injected-client logic is tested.
+- No screen (`/new`, `/profile`, `/library`, `/library/[id]`, `/sign-in`) was opened in a browser; mobile layout unchecked. The pdf.js worker and the mammoth browser build were only exercised in Node.
+- The report view is the thin wrapper only. The designed report screen and Q&A box UI are the separate third spec and are not built; `answerQuestion` still has no caller in the UI.
+
+## Real-model runs (key was present in .env.local)
+
+- `npm run smoke`: verdict `risks-found`, **1 risk flag, 1/1 survived citation verification**. The first run had 16 flags. Same fixture, same code: model output varies a lot between runs, so flag recall is unstable. Worth a look before trusting recall. One flag's summary read "This clause Convenience fee." which is awkward generated text.
+- `npx tsx scripts/gate-live.ts`: lease passes; freelance, Terms of Service and non-document were each refused with the right type.
+
+## Run these first
+
+```
+npm install
+npm run typecheck && npm test && npm run build
+npm run smoke
+```
+Then: create the Supabase project per `docs/supabase-setup.md`, put `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local`, run `supabase/migrations/0001_profiles_and_red_lines.sql` then `0002_documents.sql`, set the three `SUPABASE_TEST_*` variables and run `npm test` to exercise the RLS tests, then `npm run dev` and click through sign-in, /profile, /new, /library.
