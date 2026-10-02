@@ -144,8 +144,15 @@ export default async function SavedReportPage({ params }: { params: Promise<{ id
           </p>
         )}
         <p className={styles.note}>
-          These are your answers as of {saved}. Changes you make to your profile later don&apos;t update this report.
+          These are your answers as of {saved}. Changes you make to your profile later don&apos;t update this report
+          unless you re-run it.
         </p>
+        <p>
+          <Link href={`/profile?rerun=${doc.id}`} className={styles.back}>
+            Re-run with updated profile
+          </Link>
+        </p>
+        <p className={styles.note}>A re-run replaces this report. The current one isn&apos;t kept.</p>
       </section>
 
       <p className={styles.note}>{report.disclaimer}</p>

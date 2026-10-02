@@ -12,6 +12,7 @@
 
 import type { AnalyzeDocumentDeps } from "../analysis-engine";
 import { analyzeDocument } from "../analysis-engine";
+import { verifyCitation } from "../analysis/citation";
 import type { RenterProfile, Section } from "../analysis/types";
 import { runAnalysisIfLease, type GatedAnalysisDeps } from "../gate/run";
 import { toRenterProfile } from "../profile/mapper";
@@ -112,6 +113,87 @@ export function parseAnalyzeBody(body: unknown): ParsedBody {
   return { ok: true, value: { text, sections: parsedSections, title: cleanTitle } };
 }
 
+/** The id shape of a saved document. Anything else is rejected before a lookup. */
+export const DOCUMENT_ID_PATTERN = /^[A-Za-z0-9-]{1,64}$/;
+
+function analyzeFn(deps: AnalyzeHandlerDeps): NonNullable<GatedAnalysisDeps["analyze"]> {
+  return deps.gate?.analyze ?? ((t, s, p) => analyzeDocument(t, s, p, deps.engine ?? {}));
+}
+
+const RERUN_UNCHANGED = "The re-run failed. Your earlier report is unchanged. Try again in a minute.";
+
+/**
+ * Re-run mode: the body is `{ documentId }` and nothing else. The stored
+ * text and sections are analyzed again against the renter's current saved
+ * profile and red lines, and the report and profile snapshot on the same
+ * row are replaced. No history is kept.
+ *
+ * The document-type gate is skipped on purpose: the stored text was gated
+ * when it was first saved, and it has not changed since. Nothing the
+ * browser sends can supply text here.
+ */
+async function handleRerun(
+  raw: Record<string, unknown>,
+  userId: string,
+  deps: AnalyzeHandlerDeps,
+): Promise<Response> {
+  if (
+    !hasOnlyKeys(raw, ["documentId"]) ||
+    typeof raw.documentId !== "string" ||
+    !DOCUMENT_ID_PATTERN.test(raw.documentId)
+  ) {
+    return json({ error: "Send only the id of a saved document." }, 400);
+  }
+  const id = raw.documentId;
+
+  let doc;
+  try {
+    doc = await deps.documents.get(userId, id);
+  } catch {
+    return json({ error: "This document didn't load. Try again.", code: "load-failed" }, 500);
+  }
+  if (!doc) return json({ error: "That document isn't in your library.", code: "not-found" }, 404);
+
+  let profile: RenterProfile;
+  try {
+    const saved = await deps.profiles.load(userId);
+    if (!saved) {
+      return json(
+        { error: "Save your profile first so Redline knows your state.", code: "no-profile" },
+        409,
+      );
+    }
+    profile = toRenterProfile(saved);
+  } catch {
+    return json({ error: "Your saved profile didn't load. Try again.", code: "profile-failed" }, 500);
+  }
+
+  let report;
+  try {
+    report = await analyzeFn(deps)(doc.extractedText, doc.sections, profile);
+  } catch {
+    return json({ error: RERUN_UNCHANGED, code: "analysis-failed" }, 502);
+  }
+  // The engine already drops flags it can't cite. This is a second check on
+  // the same invariant before anything is written over the old report.
+  for (const flag of report.riskFlags) {
+    if (!verifyCitation(flag.sourceSentence, doc.extractedText, doc.sections)) {
+      return json({ error: RERUN_UNCHANGED, code: "analysis-failed" }, 502);
+    }
+  }
+
+  try {
+    const ok = await deps.documents.update(userId, id, { report, profileSnapshot: profile });
+    if (!ok) return json({ error: "That document isn't in your library.", code: "not-found" }, 404);
+    return json({ id: doc.id, title: doc.title }, 200);
+  } catch {
+    return json(
+      { error: "The re-run finished but didn't save. Your earlier report is unchanged. Try again.", code: "save-failed" },
+      500,
+    );
+  }
+}
+
 export async function handleAnalyzeRequest(
   request: Request,
   deps: AnalyzeHandlerDeps,
@@ -128,6 +210,9 @@ export async function handleAnalyzeRequest(
     raw = await request.json();
   } catch {
     return json({ error: "Body must be JSON." }, 400);
+  }
+  if (isPlainObject(raw) && "documentId" in raw) {
+    return handleRerun(raw, user.id, deps);
   }
   const parsed = parseAnalyzeBody(raw);
   if (!parsed.ok) return json({ error: parsed.error }, 400);
@@ -147,12 +232,7 @@ export async function handleAnalyzeRequest(
     return json({ error: "Your saved profile didn't load. Try again.", code: "profile-failed" }, 500);
   }
 
-  const gateDeps: GatedAnalysisDeps = {
-    ...deps.gate,
-    analyze:
-      deps.gate?.analyze ??
-      ((t, s, p) => analyzeDocument(t, s, p, deps.engine ?? {})),
-  };
+  const gateDeps: GatedAnalysisDeps = { ...deps.gate, analyze: analyzeFn(deps) };
 
   let result;
   try {

@@ -4,13 +4,13 @@
 
 **Blocked by:** 12
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A renter can open the questionnaire pre-filled from the saved profile, change it, and re-run on a saved document.
-- [ ] The saved report and profile snapshot are replaced; the previous report is not retained.
-- [ ] The re-run uses the stored text and sections; no file is needed.
-- [ ] Citations on the new report verify against the stored text, and the load-time re-check still passes.
-- [ ] A user cannot re-run another user's document.
-- [ ] Any user-facing copy has been through the humanizer skill.
+- [x] A renter can open the questionnaire pre-filled from the saved profile, change it, and re-run on a saved document.
+- [x] The saved report and profile snapshot are replaced; the previous report is not retained.
+- [x] The re-run uses the stored text and sections; no file is needed.
+- [x] Citations on the new report verify against the stored text, and the load-time re-check still passes.
+- [x] A user cannot re-run another user's document.
+- [x] Any user-facing copy has been through the humanizer skill.
 
 ## Comments
