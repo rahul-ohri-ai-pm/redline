@@ -106,13 +106,13 @@
 .refusal,
 .skipped {
   padding: 0.9rem 1rem;
-  border-left: 6px solid var(--color-violation);
+  border: 1.5px solid var(--color-violation);
   background: var(--color-paper-flat);
   line-height: 1.55;
 }
 
 .skipped {
-  border-left-color: var(--color-amber);
+  border-color: var(--color-amber);
 }
 
 .refusal p,

@@ -43,6 +43,8 @@ export function UploadPreview() {
 
   const skipped =
     outcome?.ok === true ? outcome.sections.filter((s) => !s.readable) : [];
+  // PDF sections are pages; text paragraphs are sections.
+  const unit = skipped.length > 0 && skipped.every((s) => s.id.startsWith("page-")) ? "page" : "section";
 
   return (
     <div className={styles.page}>
@@ -105,8 +107,8 @@ export function UploadPreview() {
               <div className={styles.skipped} role="status">
                 <p className={styles.noticeTitle}>
                   {skipped.length === 1
-                    ? "1 section couldn’t be read"
-                    : `${skipped.length} sections couldn’t be read`}
+                    ? `1 ${unit} couldn’t be read`
+                    : `${skipped.length} ${unit}s couldn’t be read`}
                 </p>
                 <p>
                   Redline leaves these out and says nothing about them. Check
