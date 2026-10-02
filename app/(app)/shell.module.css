@@ -52,6 +52,33 @@
   background: var(--color-paper);
 }
 
+.account {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.accountEmail {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.signOut {
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .pane {
   padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
   max-width: 62rem;
@@ -73,5 +100,9 @@
   }
   .nav {
     flex-direction: row;
+  }
+  .account {
+    margin-top: 0;
+    align-items: flex-end;
   }
 }
