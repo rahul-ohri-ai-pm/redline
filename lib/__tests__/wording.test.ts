@@ -1,6 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { composeFlagSummary } from "../analysis/wording";
 
+/**
+ * Hedging is what ADR 0005 requires of a sub-high-confidence flag; a modal
+ * verb is only one way to spell it. The medium frame deliberately hedges
+ * ahead of a full clause ("It looks like this clause charges...") because a
+ * modal placed directly before the label would demand a bare infinitive
+ * while the high-confidence frame demands third-person singular.
+ */
+const HEDGE = /\b(may|might|could|looks like|appears|isn't fully clear)\b/i;
+
 describe("composeFlagSummary", () => {
   it("states a high-confidence flag flatly, with no hedging language", () => {
     const text = composeFlagSummary(
@@ -22,8 +31,8 @@ describe("composeFlagSummary", () => {
       "charges a recurring fee not disclosed as rent"
     );
 
-    expect(lowText).toMatch(/\b(may|might|could)\b/i);
-    expect(highText).not.toMatch(/\b(may|might|could)\b/i);
+    expect(lowText).toMatch(HEDGE);
+    expect(highText).not.toMatch(HEDGE);
     // The two must actually read differently, not just differ by a prefix.
     expect(lowText).not.toBe(highText);
   });
@@ -34,7 +43,7 @@ describe("composeFlagSummary", () => {
     const medium = composeFlagSummary("medium", label);
     const low = composeFlagSummary("low", label);
 
-    expect(medium).toMatch(/\b(may|might|could)\b/i);
+    expect(medium).toMatch(HEDGE);
     expect(medium).not.toBe(high);
     expect(medium).not.toBe(low);
   });

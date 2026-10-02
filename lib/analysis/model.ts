@@ -52,7 +52,14 @@ export const FLAGS_JSON_SCHEMA: JsonSchemaSpec = {
           properties: {
             clauseType: { type: "string", enum: CLAUSE_TYPES },
             sourceSentence: { type: "string" },
-            label: { type: "string" },
+            label: {
+              type: "string",
+              description:
+                'A lowercase verb phrase that completes the sentence "This clause ___", ' +
+                'for example "lets the landlord keep the deposit without an itemized accounting". ' +
+                "Write it out in full words, abbreviating nothing, and do not " +
+                "start with a noun.",
+            },
             confidence: { type: "string", enum: CONFIDENCE_LEVELS },
             oneSidedness: { type: "string", enum: ONE_SIDEDNESS_LEVELS },
             dollarAmount: { type: ["number", "null"] },
@@ -118,7 +125,13 @@ export function buildAnalysisMessages(
       '("unusual"). For every flag, copy the exact sentence it is based on ' +
       "verbatim from the supplied text — do not paraphrase or summarize the " +
       "source sentence. When a clause is borderline, still flag it rather than " +
-      "staying silent, and reflect your uncertainty honestly in the confidence field.",
+      "staying silent, and reflect your uncertainty honestly in the confidence field. " +
+      'The "label" field goes straight into the sentence "This clause ___" ' +
+      "that the renter reads, so write it as a lowercase verb phrase that " +
+      'finishes that sentence. Write "charges $45 a month for paying rent ' +
+      'through the online portal", not "Monthly portal fee - $45". Spell ' +
+      "words out in full, abbreviating nothing, and leave out the dashes " +
+      "and plus signs of note-taking.",
   };
 
   const userMessage: ChatMessage = {

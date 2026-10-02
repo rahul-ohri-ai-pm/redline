@@ -24,7 +24,11 @@ export function composeFlagSummary(
     case "high":
       return `This clause ${body}.`;
     case "medium":
-      return `This clause may ${body} — worth confirming with the landlord before you sign.`;
+      // The hedge cannot sit directly before `body`: a modal ("may") needs a
+      // bare infinitive while the high-confidence frame needs third-person
+      // singular, and one label string cannot be both. Hedging ahead of a
+      // full clause keeps the label's inflection usable in every frame.
+      return `It looks like this clause ${body}, though that's worth confirming with the landlord before you sign.`;
     case "low":
       return `Worth a closer look: the wording here could mean this clause ${body}, though it isn't fully clear from the text alone.`;
     default: {
