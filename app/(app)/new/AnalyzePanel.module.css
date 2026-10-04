@@ -1,95 +1,73 @@
+/*
+ * The analyze step, shown once the document-type gate has passed. It is the
+ * one place on this screen with a primary action, so it gets the kraft tag
+ * stock: the renter is about to turn a file into findings.
+ */
+
 .panel {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
-  padding: 1rem 1.1rem 1.1rem;
-  border: 2px solid var(--color-ink);
-  background: var(--color-paper-flat);
-  line-height: 1.55;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 1.1rem 1.25rem 1.2rem;
+  background: var(--color-kraft);
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
+  box-shadow: var(--shadow-tag-soft);
+}
+
+.panel > * {
+  max-width: 100%;
 }
 
 .title {
   margin: 0;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--t-lg);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.body,
-.status,
-.hint {
+.body {
   margin: 0;
-}
-
-.status,
-.hint {
-  color: var(--color-ink-soft);
-  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 58ch;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  align-items: flex-start;
-}
-
-.label {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.03em;
-}
-
-.input {
+  gap: 0.3rem;
   width: 100%;
-  max-width: 32rem;
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 0.5rem 0.65rem;
-  background: var(--color-paper);
-  color: var(--color-ink);
-  border: 2px solid var(--color-kraft-dark);
-  border-radius: 2px;
+  max-width: 28rem;
 }
 
-.button,
-.link {
-  display: inline-block;
-  background: var(--color-violation);
-  color: var(--color-paper);
-  border: 0;
-  border-radius: 2px;
-  padding: 0.6rem 1.2rem;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.05rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  align-self: flex-start;
-}
-
-.button:hover:not(:disabled),
-.link:hover {
-  background: var(--color-violation-dark);
-}
-
-.button:disabled {
-  background: var(--color-steel);
-  cursor: not-allowed;
-}
-
-.inline {
-  color: var(--color-ink);
-  font-weight: 700;
-  text-decoration: underline;
+.hint {
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-size: var(--t-xs);
+  line-height: 1.55;
 }
 
 .error {
   margin: 0;
-  padding: 0.7rem 0.9rem;
-  border: 1.5px solid var(--color-violation);
+  padding: 0.6rem 0.75rem;
   background: var(--color-paper);
+  border: 1px solid var(--color-violation);
+  line-height: 1.6;
+  max-width: 58ch;
+}
+
+.inline {
+  color: var(--color-ink);
+  font-weight: 600;
+  text-decoration-color: var(--color-kraft-dark);
+  text-underline-offset: 0.2em;
+}
+
+.inline:hover,
+.inline:focus-visible {
+  text-decoration-color: var(--color-violation);
 }
 
 @media (max-width: 720px) {
@@ -97,15 +75,29 @@
   .link {
     min-height: 2.75rem;
   }
-  .inline {
-    display: inline-block;
-    padding: 0.5rem 0;
-  }
-  .panel,
-  .refusal,
-  .skipped,
-  .pass,
-  .error {
+  .error,
+  .body {
     overflow-wrap: anywhere;
   }
+}
+
+/* Shared vocabulary under this screen's class names. */
+.label {
+  composes: label from "../../ui.module.css";
+}
+
+.input {
+  composes: input from "../../ui.module.css";
+}
+
+.button {
+  composes: btnPrimary from "../../ui.module.css";
+}
+
+.link {
+  composes: btnPrimary from "../../ui.module.css";
+}
+
+.status {
+  composes: status from "../../ui.module.css";
 }

@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { MAX_QUESTION_CHARS } from "@/lib/ask/limits";
 import { requestAnswer, type AskResult } from "@/lib/ask/client";
+import ui from "../../../ui.module.css";
 import styles from "./qa.module.css";
 
 type Entry = {
@@ -69,15 +70,15 @@ export function QaBox({ documentId }: { documentId: string }) {
 
   return (
     <section className={styles.box} aria-labelledby="qa-heading">
-      <h2 id="qa-heading" className={styles.h2}>
+      <h2 id="qa-heading" className={ui.h2}>
         Ask about this document
       </h2>
-      <p className={styles.note}>
+      <p className={ui.note}>
         Answers come from your lease text or your state&apos;s reference data. Anything else gets a refusal. This list
         clears when you leave the page.
       </p>
       <form onSubmit={submit} className={styles.form}>
-        <label htmlFor="qa-input" className={styles.label}>
+        <label htmlFor="qa-input" className={ui.label}>
           Your question
         </label>
         <textarea
@@ -102,12 +103,12 @@ export function QaBox({ documentId }: { documentId: string }) {
       </form>
 
       {entries.length === 0 ? (
-        <p className={styles.note}>No questions yet.</p>
+        <p className={ui.note}>No questions yet.</p>
       ) : (
         <ol className={styles.history} aria-live="polite">
           {entries.map((e) => (
             <li key={e.key} className={styles.entry}>
-              <span className={styles.label}>You asked</span>
+              <span className={ui.label}>You asked</span>
               <p className={styles.question}>{e.question}</p>
               {e.outcome === null && (
                 <p role="status" className={styles.wait}>
@@ -116,13 +117,13 @@ export function QaBox({ documentId }: { documentId: string }) {
               )}
               {e.outcome?.status === "answer" && (
                 <div className={styles.answer}>
-                  <span className={styles.chip}>{GROUNDING_LABEL[e.outcome.groundedIn]}</span>
+                  <span className={styles.grounding}>{GROUNDING_LABEL[e.outcome.groundedIn]}</span>
                   <p>{e.outcome.text}</p>
                   {e.outcome.sourceSentences.length > 0 && (
                     <>
-                      <span className={styles.label}>Quoted from your document</span>
+                      <span className={ui.label}>Quoted from your document</span>
                       {e.outcome.sourceSentences.map((s, i) => (
-                        <blockquote key={i} className={styles.quote}>
+                        <blockquote key={i} className={ui.quote}>
                           {s}
                         </blockquote>
                       ))}

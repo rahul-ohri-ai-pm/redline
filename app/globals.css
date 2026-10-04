@@ -8,9 +8,8 @@
   --color-ink: #2b2b28;
   --color-ink-soft: #55534a;
   --color-steel: #6b6b63;
-  --color-amber: #d97f2e;
-  --color-amber-dark: #a85f1f;
-  --color-clarify: #8c8577;
+  --color-amber-dark: #8f4f17;
+  --color-clarify: #645c4c;
 
   --font-display: var(--font-stencil), "Arial Narrow", sans-serif;
   --font-mono: var(--font-ticket), "Courier New", monospace;
@@ -18,6 +17,32 @@
 
   --shadow-tag: 0 10px 24px -12px rgba(43, 43, 40, 0.45), 0 2px 6px -2px rgba(43, 43, 40, 0.3);
   --shadow-tag-soft: 0 6px 16px -10px rgba(43, 43, 40, 0.35);
+
+  /* App shell type ramp. The landing page sizes type against the viewport; a
+     working screen does not move under the renter, so this scale is fixed in
+     rem and every size behind sign-in comes from one of these seven steps. */
+  --t-3xs: 0.72rem; /* stamps, tallies, chips, ticket numbers */
+  --t-2xs: 0.8rem; /* mono field labels, secondary buttons, meta */
+  --t-xs: 0.88rem; /* secondary prose: notes, hints, the disclaimer */
+  --t-md: 1rem; /* body, quoted lease text, form controls */
+  --t-lg: 1.15rem; /* the summary lead, primary button labels, panel titles */
+  --t-xl: 1.5rem; /* the wordmark and the screen name in the top strip */
+  --t-2xl: 1.9rem; /* the verdict, and sign-in's own title */
+
+  /* Hairline rules carry structure inside the pane. Heavier borders are for
+     the frame itself and for the one-line marks a finding earns. */
+  --rule: 1px solid var(--color-kraft-dark);
+  --rule-ink: 1px solid var(--color-ink);
+  --notch: 18px;
+
+  /* The working pane's gutter and measure, shared by the top strip and by
+     every screen's content so they line up on one edge. */
+  --pane-pad: clamp(1rem, 4vw, 3rem);
+  --pane-max: 68rem;
+  /* A screen's wrapper carries the gutter inside its box, so it has to be
+     wider than the measure by exactly that gutter to line its content up
+     with the top strip's. */
+  --pane-frame: calc(var(--pane-max) + var(--pane-pad) * 2);
 
   color-scheme: light;
 }
@@ -37,6 +62,8 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  accent-color: var(--color-violation);
+  caret-color: var(--color-violation);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -72,7 +99,7 @@ button {
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-kraft-dark);
-  border-radius: 999px;
+  border-radius: 2px;
   border: 3px solid var(--color-paper-flat);
 }
 

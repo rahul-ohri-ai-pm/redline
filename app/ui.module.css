@@ -1,0 +1,484 @@
+/*
+ * The shell's component vocabulary. Every screen behind sign-in imports from
+ * here, so a stamp, a label, a quote or a button is defined once and looks the
+ * same in the report, the library, the questionnaire and the upload screen.
+ *
+ * Two rules from DESIGN.md hold this file together:
+ *   - Violation red is a mark, never a field. It fills a stamp, a primary
+ *     button and a hairline alert rule; it never grounds a panel.
+ *   - Each bucket owns one mark: solid red fill, amber outline, dashed
+ *     graphite outline. Nothing else in here is dashed.
+ */
+
+/* ---- Type ---------------------------------------------------------------- */
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--t-xl);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--t-lg);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--t-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.note {
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-size: var(--t-xs);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.body {
+  margin: 0;
+  line-height: 1.65;
+  max-width: 68ch;
+}
+
+/* Inside a finding, the summary and the sentence it quotes share one measure.
+   Capping only the summary made the card read as two different columns. */
+.tag .body,
+.tag .quote,
+.tag .note {
+  max-width: 64ch;
+}
+
+/* ---- Sections ------------------------------------------------------------ */
+
+/*
+ * A section is a hairline rule and a heading, not a box. The engineering build
+ * gave every block the same 2px border, which left the report with no
+ * hierarchy at all: a disclaimer looked exactly like a finding.
+ */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding-top: 1.1rem;
+  border-top: var(--rule);
+}
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  color: var(--color-ink-soft);
+}
+
+/*
+ * Paper stock: the lease sheet from the landing page's hero, reused wherever a
+ * screen shows the document itself or stands in for it — the extracted-text
+ * preview, an empty library, the sign-in sheet.
+ */
+.sheet {
+  background: var(--color-paper-flat);
+  border: var(--rule);
+  box-shadow: var(--shadow-tag-soft);
+  padding: 1.25rem 1.3rem;
+}
+
+/* ---- The notch-cut finding row ------------------------------------------- */
+
+/*
+ * The landing page's violation tag, compressed for daily use: the die-cut
+ * corner and the stamp survive; the wire, grommet and dollar roundel do not.
+ * Kraft stock is reserved for findings, so the only kraft objects in the
+ * working pane are the things Redline actually found.
+ */
+.tag {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.15rem 1.1rem;
+  background: var(--color-kraft);
+  clip-path: polygon(var(--notch) 0, 100% 0, 100% 100%, 0 100%, 0 var(--notch));
+  box-shadow: var(--shadow-tag-soft);
+}
+
+/* Deprioritized: same content, lighter stock. Not dashed — dashed is clarify's. */
+.tagQuiet {
+  background: var(--color-paper-flat);
+  color: var(--color-ink-soft);
+  box-shadow: none;
+}
+
+.tagHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 0.75rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px dashed var(--color-kraft-dark);
+}
+
+.tagHeadMain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.7rem;
+  min-width: 0;
+}
+
+.category {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.ticketNo {
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  color: var(--color-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Quoted lease text is body type, as it is on the landing tag. Courier is for
+ * numerals, stamps and labels; a sentence from the renter's own lease is prose
+ * and reads as prose.
+ */
+.quote {
+  margin: 0;
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--color-kraft-dark);
+  font-size: var(--t-md);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.quote::before {
+  content: "\201C";
+  margin-right: 0.05em;
+}
+
+.quote::after {
+  content: "\201D";
+  margin-left: 0.05em;
+}
+
+/* ---- Bucket stamps ------------------------------------------------------- */
+
+.stamp {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--t-2xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  white-space: nowrap;
+  transform: rotate(-3deg);
+  transition: transform 180ms ease;
+}
+
+/*
+ * The three marks differ in kind — solid fill, solid outline, dashed outline —
+ * and all three carry a 2px border so they occupy the same box. Telling them
+ * apart must never depend on one being lighter than another.
+ */
+.stampRemove {
+  background: var(--color-violation);
+  border: 2px solid var(--color-violation);
+  color: var(--color-paper);
+  box-shadow: inset 0 0 0 1px rgba(246, 241, 228, 0.55);
+}
+
+.stampPush {
+  color: var(--color-amber-dark);
+  border: 2px solid var(--color-amber-dark);
+}
+
+.stampClarify {
+  color: var(--color-clarify);
+  border: 2px dashed var(--color-clarify);
+}
+
+/* The one authored gesture in the shell: the stamp straightens as the renter
+   reaches the row it belongs to. */
+.tag:hover .stamp,
+.tag:focus-within .stamp {
+  transform: rotate(0deg);
+}
+
+/* ---- Tallies ------------------------------------------------------------- */
+
+.tallies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tally {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--t-3xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tallyCount {
+  font-size: var(--t-md);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * A tally wears its bucket's mark and nothing else: the same solid red fill,
+ * amber outline and dashed graphite outline the stamps use, without the
+ * stamp's rotation — three tilted marks in a slim strip reads as noise.
+ */
+.tallyRemove {
+  background: var(--color-violation);
+  border: 2px solid var(--color-violation);
+  color: var(--color-paper);
+  box-shadow: inset 0 0 0 1px rgba(246, 241, 228, 0.55);
+}
+
+.tallyPush {
+  color: var(--color-amber-dark);
+  border: 2px solid var(--color-amber-dark);
+}
+
+.tallyClarify {
+  color: var(--color-clarify);
+  border: 2px dashed var(--color-clarify);
+}
+
+/* An empty bucket has nothing to stamp, so it loses its mark and reads as
+   paper. Red stays proportional to what was actually found. */
+.tallyEmpty {
+  background: var(--color-paper-flat);
+  border: 2px solid var(--color-kraft-dark);
+  color: var(--color-ink-soft);
+}
+
+/* ---- Controls ------------------------------------------------------------ */
+
+.btnPrimary {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.3rem;
+  border: 0;
+  border-radius: 2px;
+  background: var(--color-violation);
+  color: var(--color-paper);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--t-lg);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: var(--shadow-tag-soft);
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.btnPrimary:hover:not(:disabled),
+.btnPrimary:focus-visible:not(:disabled) {
+  background: var(--color-violation-dark);
+  box-shadow: var(--shadow-tag);
+  transform: translateY(-2px);
+}
+
+.btn {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.85rem;
+  border: var(--rule-ink);
+  border-radius: 2px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--t-2xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.btn:hover:not(:disabled),
+.btn:focus-visible:not(:disabled) {
+  border-color: var(--color-violation);
+  color: var(--color-violation-dark);
+}
+
+.btnDanger {
+  border-color: var(--color-violation);
+  background: var(--color-violation);
+  color: var(--color-paper);
+}
+
+.btnDanger:hover:not(:disabled),
+.btnDanger:focus-visible:not(:disabled) {
+  background: var(--color-violation-dark);
+  border-color: var(--color-violation-dark);
+  color: var(--color-paper);
+}
+
+.btnPrimary:disabled,
+.btn:disabled {
+  opacity: 0.5;
+  box-shadow: none;
+  transform: none;
+  cursor: default;
+}
+
+.link {
+  color: var(--color-ink);
+  font-weight: 600;
+  text-decoration-color: var(--color-kraft-dark);
+  text-underline-offset: 0.2em;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration-color: var(--color-violation);
+}
+
+/* ---- Fields -------------------------------------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: var(--rule-ink);
+  border-radius: 2px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font: inherit;
+  line-height: 1.5;
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.select {
+  /* The platform control, in the palette. Nothing here reinvents a dropdown. */
+  padding-right: 2rem;
+}
+
+/* ---- Notices ------------------------------------------------------------- */
+
+/*
+ * Three weights, one shape. A notice is paper with a hairline rule; what
+ * changes is the color of the rule and nothing else.
+ */
+.notice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+  padding: 0.8rem 0.95rem;
+  background: var(--color-paper-flat);
+  border: var(--rule-ink);
+}
+
+.noticeAlert {
+  background: var(--color-paper);
+  border-color: var(--color-violation);
+}
+
+.noticeQuiet {
+  border-color: var(--color-kraft-dark);
+}
+
+.noticeTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--t-md);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.notice p {
+  margin: 0;
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.status {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  color: var(--color-ink-soft);
+}
+
+@media (max-width: 720px) {
+  .btnPrimary,
+  .btn {
+    min-height: 2.75rem;
+  }
+  .input,
+  .select,
+  .textarea {
+    /* 1rem keeps iOS from zooming the page when a field takes focus. */
+    font-size: var(--t-md);
+  }
+  .quote,
+  .body,
+  .note,
+  .notice p {
+    overflow-wrap: anywhere;
+  }
+}

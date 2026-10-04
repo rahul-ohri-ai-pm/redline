@@ -167,7 +167,7 @@
 
 .push .stamp {
   color: var(--color-amber-dark);
-  border: 2px solid var(--color-amber);
+  border: 2px solid var(--color-amber-dark);
   background: transparent;
 }
 

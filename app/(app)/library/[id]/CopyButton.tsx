@@ -20,7 +20,7 @@ export function CopyButton({ text, label = "Copy counter-offer" }: { text: strin
   }
 
   return (
-    <div className={styles.copyBox}>
+    <div className={styles.copyRow}>
       <button type="button" className={styles.copyBtn} onClick={copy}>
         {state === "copied" ? "Copied" : label}
       </button>

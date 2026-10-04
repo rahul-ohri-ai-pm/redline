@@ -1,3 +1,10 @@
+/*
+ * The frame: a kraft rail, a slim strip across the top of the working pane,
+ * and the pane itself. The strip is styled here because it belongs to the
+ * frame, and filled per screen because the open document's tallies belong to
+ * a document the layout does not load.
+ */
+
 .shell {
   display: grid;
   grid-template-columns: 15rem minmax(0, 1fr);
@@ -6,11 +13,11 @@
 
 .rail {
   background: var(--color-kraft);
-  border-right: 2px solid var(--color-kraft-dark);
+  border-right: var(--rule);
   padding: 1.25rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.5rem;
 }
 
 .wordmark {
@@ -19,7 +26,7 @@
   gap: 0.6rem;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.6rem;
+  font-size: var(--t-xl);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   text-decoration: none;
@@ -34,22 +41,37 @@
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
 }
 
+/*
+ * The active screen reads as a paper sheet pulled forward out of the kraft
+ * rail. No colored edge bar: the kraft-to-paper change is the state.
+ */
 .navItem {
   display: block;
-  padding: 0.55rem 0.7rem;
-  border: 1.5px solid transparent;
-  font-size: 0.95rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid transparent;
+  font-size: var(--t-md);
   font-weight: 600;
   text-decoration: none;
+  color: var(--color-ink-soft);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.navItem:hover,
+.navItem:focus-visible {
   color: var(--color-ink);
+  background: var(--color-kraft-dark);
 }
 
 .navItem[aria-current="page"] {
-  border-color: var(--color-violation);
   background: var(--color-paper);
+  border-color: var(--color-kraft-dark);
+  color: var(--color-ink);
+  font-weight: 700;
 }
 
 .account {
@@ -57,12 +79,14 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-kraft-dark);
 }
 
 .accountEmail {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--t-2xs);
   color: var(--color-ink-soft);
   overflow-wrap: anywhere;
 }
@@ -72,20 +96,101 @@
   background: none;
   border: 0;
   padding: 0;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   color: var(--color-ink);
   text-decoration: underline;
+  text-decoration-color: var(--color-kraft-dark);
+  text-underline-offset: 0.2em;
   cursor: pointer;
 }
 
-.pane {
-  padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
-  max-width: 62rem;
-  width: 100%;
+.signOut:hover,
+.signOut:focus-visible {
+  text-decoration-color: var(--color-violation);
 }
 
-/* Wide screens: the panel wrapper disappears so the rail lays out as before. */
+.pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-bottom: 4rem;
+}
+
+/* ---- The top strip ------------------------------------------------------- */
+
+.strip {
+  padding: 0.85rem var(--pane-pad);
+  background: var(--color-paper-flat);
+  border-bottom: var(--rule);
+}
+
+/* The strip's contents sit on the same measure as the pane's, so the screen
+   name, the tallies and the content below all line up on two edges. */
+.stripInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1.25rem;
+  max-width: var(--pane-max);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.stripMain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.9rem;
+  min-width: 0;
+}
+
+/*
+ * A link out of the screen, drawn as one: an arrow and a sentence-case label.
+ * In small uppercase it stacked over the title at phone width and read as a
+ * kicker rather than as navigation.
+ */
+.stripBack {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  text-decoration: underline;
+  text-decoration-color: var(--color-kraft-dark);
+  text-underline-offset: 0.2em;
+  white-space: nowrap;
+}
+
+.stripBack svg {
+  width: 0.85em;
+  height: 0.85em;
+}
+
+.stripBack:hover,
+.stripBack:focus-visible {
+  color: var(--color-ink);
+  text-decoration-color: var(--color-violation);
+}
+
+.stripAside {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  color: var(--color-ink-soft);
+}
+
+/* Wide screens: the panel wrapper disappears so the rail lays out as a column,
+   and the menu button has nothing to toggle. Both are overridden in the phone
+   media block below, so they stay ahead of it in source order. */
 .panel {
   display: contents;
 }
@@ -93,6 +198,8 @@
 .menuButton {
   display: none;
 }
+
+/* ---- Phone: the rail collapses to a drawer ------------------------------- */
 
 @media (max-width: 720px) {
   .shell {
@@ -104,12 +211,13 @@
     align-items: center;
     justify-content: space-between;
     border-right: 0;
-    border-bottom: 2px solid var(--color-kraft-dark);
+    border-bottom: 1px solid var(--color-kraft-dark);
     padding: 0.5rem 1rem;
     gap: 0.5rem 1rem;
   }
   .wordmark {
     min-height: 2.75rem;
+    font-size: var(--t-xl);
   }
   .menuButton {
     display: inline-flex;
@@ -119,12 +227,12 @@
     justify-content: center;
     padding: 0 1rem;
     background: var(--color-paper);
-    border: 2px solid var(--color-ink);
+    border: var(--rule-ink);
     border-radius: 2px;
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.03em;
+    font-size: var(--t-2xs);
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--color-ink);
     cursor: pointer;
@@ -146,14 +254,19 @@
   }
   .account {
     margin-top: 0;
-    padding-top: 0.75rem;
-    border-top: 1.5px solid var(--color-kraft-dark);
   }
   .signOut {
     min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
     padding: 0 0.25rem 0 0;
   }
-  .pane {
-    padding-top: 1.25rem;
+  /* The strip keeps the screen's name and tallies, stacked, so the verdict is
+     still the first thing in the pane. */
+  .strip {
+    padding: 0.7rem var(--pane-pad);
+  }
+  .stripAside {
+    flex-basis: 100%;
   }
 }

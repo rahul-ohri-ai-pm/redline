@@ -3,6 +3,8 @@ import { requireUser, createServerSupabase } from "@/lib/supabase/server";
 import { createSupabaseProfileStore } from "@/lib/profile/supabase-store";
 import { coveredStates, RENTER_TYPES, MAX_RED_LINES } from "@/lib/profile/validate";
 import { parseRerunTarget } from "@/lib/documents/client";
+import { TopStrip } from "../TopStrip";
+import ui from "../../ui.module.css";
 import { ProfileForm } from "./ProfileForm";
 import styles from "./profile.module.css";
 
@@ -31,30 +33,34 @@ export default async function ProfilePage({
   }
 
   return (
-    <div className={styles.page}>
-      <h1 className={styles.h1}>Profile and red lines</h1>
-      <p className={styles.lede}>
-        Your answers and red lines are saved to your account and used for every document you
-        analyze. Change only what&apos;s different this time.
-      </p>
-      {rerunId && (
+    <>
+      <TopStrip name="Profile & red lines" />
+      <div className={styles.page}>
         <p className={styles.lede}>
-          Saving here also re-runs your saved document with these answers and replaces its report.
+          Your answers and red lines are saved to your account and used for every document
+          you analyze. Change only what&apos;s different this time.
         </p>
-      )}
-      {loadFailed ? (
-        <p role="alert" className={styles.error}>
-          Your saved answers didn&apos;t load. Reload the page to try again.
-        </p>
-      ) : (
-        <ProfileForm
-          states={coveredStates()}
-          renterTypes={[...RENTER_TYPES]}
-          maxRedLines={MAX_RED_LINES}
-          initial={saved}
-          rerunId={rerunId}
-        />
-      )}
-    </div>
+        {rerunId && (
+          <p className={styles.lede}>
+            Saving here also re-runs your saved document with these answers and replaces its
+            report.
+          </p>
+        )}
+        {loadFailed ? (
+          <div role="alert" className={`${ui.notice} ${ui.noticeAlert}`}>
+            <p className={ui.noticeTitle}>Your saved answers didn&apos;t load</p>
+            <p>Reload the page to try again.</p>
+          </div>
+        ) : (
+          <ProfileForm
+            states={coveredStates()}
+            renterTypes={[...RENTER_TYPES]}
+            maxRedLines={MAX_RED_LINES}
+            initial={saved}
+            rerunId={rerunId}
+          />
+        )}
+      </div>
+    </>
   );
 }

@@ -1,133 +1,168 @@
-.tallies {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.6rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+/*
+ * The report screen. The pane opens on the verdict, the summary and the
+ * disclaimer; the tallies are in the frame's top strip, not here. Findings are
+ * the only kraft objects on the page, so what Redline found is what the eye
+ * lands on.
+ */
 
-.tally {
+.page {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  padding: 0.5rem 0.7rem;
-  border: 2px solid var(--color-ink);
-  background: var(--color-paper-flat);
+  gap: 1.6rem;
+  padding: 1.6rem var(--pane-pad) 0;
+  max-width: var(--pane-frame);
+  width: 100%;
+  margin: 0 auto;
+  min-width: 0;
 }
 
-.tallyRemove {
-  border-color: var(--color-violation);
+/* ---- Verdict ------------------------------------------------------------- */
+
+/*
+ * The lead band. It opens on this document's own verdict and facts; the
+ * standing disclaimer sits under them as a note rather than as the heaviest
+ * object on the screen, which is where the first pass left it.
+ */
+.verdict {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
 }
 
-.tallyPush {
-  border-color: var(--color-amber-dark);
-}
-
-.tallyClarify {
-  border-color: var(--color-clarify);
-}
-
-.tallyCount {
+.verdictLabel {
+  margin: 0;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.7rem;
-  line-height: 1;
-}
-
-.tallyLabel {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 0.72rem;
-  letter-spacing: 0.03em;
+  font-size: var(--t-2xl);
+  line-height: 1.08;
+  letter-spacing: 0.015em;
   text-transform: uppercase;
-  color: var(--color-ink-soft);
 }
 
-.group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+.summary {
+  margin: 0;
+  font-size: var(--t-lg);
+  line-height: 1.6;
+  max-width: 54ch;
 }
 
-.groupCount {
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  color: var(--color-ink-soft);
-}
-
-/* Deprioritized: same content, dashed outline and softer ink. */
-.quiet {
-  border: 2px dashed var(--color-kraft-dark);
-  background: var(--color-paper);
-  color: var(--color-ink-soft);
-}
-
-.copyBox {
+/* Facts about this document, in the numbered register the world uses. */
+.leadFacts {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 0.8rem;
-  align-items: center;
-}
-
-.copyBtn {
+  gap: 0.2rem 0.6rem;
   font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.03em;
+  font-size: var(--t-2xs);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 0.4rem 0.8rem;
-  border: 1.5px solid var(--color-ink);
-  background: var(--color-paper);
-  color: var(--color-ink);
-  cursor: pointer;
+  color: var(--color-ink-soft);
 }
 
-.copyBtn:hover,
-.copyBtn:focus-visible {
-  border-color: var(--color-violation);
-}
-
-.copyNote {
-  font-size: 0.88rem;
-  color: var(--color-violation-dark);
-}
-
-/* Verdict and disclaimer share the first screenful, side by side on wide panes. */
-.verdictRow {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: 0.9rem;
-  align-items: stretch;
-}
-
-.verdictBox {
-  height: 100%;
-}
-
+/*
+ * Present on every report and inside the first screenful, as ticket 16 asks,
+ * but carried as a note: a standing legal notice is not a finding, and it
+ * should not outweigh the verdict it sits under. Its rule runs the full pane
+ * measure like every other section rule, and that rule is ink rather than
+ * kraft so the notice is not mistaken for one more labelled field.
+ */
 .disclaimer {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem 1.1rem 1.15rem;
-  border: 2px solid var(--color-ink);
-  background: var(--color-paper);
+  gap: 0.25rem;
+  padding-top: 0.8rem;
+  border-top: var(--rule-ink);
+}
+
+.disclaimerLabel {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--t-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
 }
 
 .disclaimer p {
   margin: 0;
-  line-height: 1.6;
-  font-size: 0.95rem;
+  max-width: 62ch;
+  font-size: var(--t-xs);
+  line-height: 1.55;
+  color: var(--color-ink-soft);
 }
 
-/* Suggestions: dotted outline, kraft ground, no quote block. Reads as advice. */
+/* ---- Flags --------------------------------------------------------------- */
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding-top: 1.1rem;
+  border-top: var(--rule);
+}
+
+.flags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.flagFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+}
+
+.quietNote {
+  font-family: var(--font-mono);
+  font-size: var(--t-3xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+/* A drafted counter-offer is the one place the renter gets words to send, so
+   it carries the red rule and sits on paper, lifted off the kraft tag. */
+.counter {
+  margin: 0;
+  max-width: 64ch;
+  padding: 0.7rem 0.85rem;
+  background: var(--color-paper);
+  border: 1px solid var(--color-violation);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.copyRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.8rem;
+}
+
+.copyNote {
+  font-size: var(--t-xs);
+  color: var(--color-violation-dark);
+}
+
+/* ---- Suggestions --------------------------------------------------------- */
+
+/*
+ * Opportunity flags are advice about what the lease leaves out, so they have
+ * no sentence to quote (ADR 0010). They get no notch, no kraft and no bucket
+ * color — a suggestion must never read as a finding.
+ */
 .suggestions {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 1rem 1.1rem 1.15rem;
-  border: 2px dotted var(--color-steel);
-  background: var(--color-kraft);
+  padding-top: 1.1rem;
+  border-top: var(--rule);
 }
 
 .suggestionList {
@@ -136,7 +171,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.6rem;
 }
 
 .suggestion {
@@ -144,40 +179,41 @@
   flex-direction: column;
   gap: 0.4rem;
   align-items: flex-start;
-  padding: 0.7rem 0.9rem;
-  background: var(--color-paper);
-  border: 1.5px dotted var(--color-steel);
+  padding: 0.8rem 0.95rem;
+  background: var(--color-paper-flat);
+  border: 1px solid var(--color-steel);
 }
 
 .suggestion p {
   margin: 0;
   line-height: 1.6;
+  max-width: 62ch;
 }
 
 .suggestionTag {
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 0.72rem;
-  letter-spacing: 0.03em;
+  font-size: var(--t-3xs);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 0.1rem 0.5rem;
-  border: 1.5px dotted var(--color-ink-soft);
-  border-radius: 999px;
   color: var(--color-ink-soft);
 }
+
+/* ---- Profile snapshot ---------------------------------------------------- */
 
 .profileList {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.3rem;
 }
 
 .profileRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2rem 0.8rem;
+  gap: 0.2rem 0.9rem;
   align-items: baseline;
+  padding: 0.2rem 0;
 }
 
 .profileRow dt {
@@ -186,53 +222,57 @@
 
 .profileRow dd {
   margin: 0;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
-@media (max-width: 760px) {
-  .verdictRow {
-    grid-template-columns: minmax(0, 1fr);
-  }
+.skippedList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: var(--t-md);
+  line-height: 1.55;
 }
 
-@media (max-width: 480px) {
-  .tallies {
-    gap: 0.4rem;
-  }
-  .tally {
-    padding: 0.4rem 0.5rem;
-  }
+.sectionId {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  color: var(--color-ink-soft);
 }
 
-/* Phone width: tallies shrink so they sit above the verdict without crowding it. */
-@media (max-width: 480px) {
-  .tally {
-    padding: 0.35rem 0.5rem;
-  }
-  .tallyCount {
-    font-size: 1.35rem;
-  }
-  .tallyLabel {
-    font-size: 0.66rem;
-    letter-spacing: 0;
-    overflow-wrap: anywhere;
-  }
+.footRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
+  align-items: center;
+  padding-top: 1.1rem;
+  border-top: var(--rule);
 }
 
 @media (max-width: 720px) {
+  .page {
+    gap: 1.3rem;
+    padding-top: 1.2rem;
+  }
+  .verdictLabel {
+    font-size: var(--t-xl);
+  }
   .copyBtn {
     min-height: 2.75rem;
-    padding: 0.4rem 1rem;
   }
   .profileRow dt {
     min-width: 0;
     flex-basis: 100%;
   }
-  .profileRow dd {
-    overflow-wrap: anywhere;
-    min-width: 0;
-  }
-  .suggestion p,
-  .disclaimer p {
-    overflow-wrap: anywhere;
-  }
+}
+
+/*
+ * The copy control keeps its own class so the phone-width touch-target test
+ * finds it in this file; the look comes from the shared button vocabulary.
+ */
+.copyBtn {
+  composes: btn from "../../../ui.module.css";
 }

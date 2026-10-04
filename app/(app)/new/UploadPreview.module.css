@@ -1,166 +1,127 @@
+/*
+ * Add a document. The renter's two questions on this screen are "did it read
+ * my file" and "what exactly leaves my browser", so the extracted text is
+ * shown as the paper it came from and the parse notices sit above it.
+ */
+
 .page {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-.h1 {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
-  letter-spacing: 0.015em;
-  line-height: 1.15;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.h2 {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.3rem;
-  letter-spacing: 0.02em;
-  margin: 0;
-  text-transform: uppercase;
+  gap: 1.1rem;
+  padding: 1.6rem var(--pane-pad) 0;
+  max-width: var(--pane-frame);
+  width: 100%;
+  margin: 0 auto;
+  min-width: 0;
 }
 
 .lede {
   margin: 0;
-  max-width: 40rem;
   line-height: 1.65;
-  color: var(--color-ink-soft);
+  max-width: 62ch;
 }
 
+/*
+ * The two ways in, stacked. Side by side they left the left half of a 1440
+ * pane holding one short button against a tall textarea.
+ */
 .inputs {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 44rem;
+  padding-top: 1.1rem;
+  border-top: var(--rule);
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
   align-items: flex-start;
+  min-width: 0;
 }
 
-.label {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.03em;
-}
-
-.file {
-  font-family: inherit;
-  font-size: 0.95rem;
+.field > * {
   max-width: 100%;
 }
 
-.textarea {
+/* The file control is the platform's, in the palette: its button takes the
+   same mono treatment as every other secondary control. */
+.file {
   width: 100%;
   font-family: var(--font-mono);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  padding: 0.6rem 0.7rem;
-  background: var(--color-paper);
-  color: var(--color-ink);
-  border: 2px solid var(--color-kraft-dark);
-  border-radius: 2px;
-  resize: vertical;
+  font-size: var(--t-xs);
+  color: var(--color-ink-soft);
 }
 
-.button {
-  background: var(--color-violation);
-  color: var(--color-paper);
-  border: 0;
+.file::file-selector-button {
+  margin-right: 0.75rem;
+  padding: 0.4rem 0.85rem;
+  border: var(--rule-ink);
   border-radius: 2px;
-  padding: 0.6rem 1.2rem;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.05rem;
-  letter-spacing: 0.04em;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--t-2xs);
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   cursor: pointer;
 }
 
-.button:hover:not(:disabled) {
-  background: var(--color-violation-dark);
-}
-
-.button:disabled {
-  background: var(--color-steel);
-  cursor: not-allowed;
+.file::file-selector-button:hover {
+  border-color: var(--color-violation);
+  color: var(--color-violation-dark);
 }
 
 .result {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
-}
-
-.status {
-  margin: 0;
-  color: var(--color-ink-soft);
-}
-
-.refusal,
-.skipped,
-.pass {
-  padding: 0.9rem 1rem;
-  border: 1.5px solid var(--color-violation);
-  background: var(--color-paper-flat);
-  line-height: 1.55;
-}
-
-.skipped {
-  border-color: var(--color-amber);
-}
-
-.pass {
-  border-color: var(--color-ink);
-}
-
-.refusal .button {
-  margin-top: 0.75rem;
-}
-
-.refusal p,
-.skipped p,
-.pass p {
-  margin: 0.25rem 0 0;
-}
-
-.noticeTitle {
-  font-weight: 700;
-  margin-top: 0 !important;
+  gap: 1rem;
 }
 
 .skippedList {
-  margin: 0.5rem 0 0;
-  padding-left: 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: var(--t-md);
+  line-height: 1.55;
 }
 
 .sectionId {
   font-family: var(--font-mono);
-  font-weight: 700;
-  text-transform: capitalize;
+  font-size: var(--t-xs);
+  color: var(--color-ink-soft);
 }
 
 .hint {
   margin: 0;
   color: var(--color-ink-soft);
+  font-size: var(--t-xs);
+  line-height: 1.6;
+  max-width: 62ch;
 }
 
+/*
+ * The extracted text, on the lease sheet's own stock. This is the string that
+ * will be sent and stored, so it is shown as the document rather than as a
+ * code block.
+ */
 .preview {
   margin: 0;
-  max-height: 32rem;
+  max-height: 26rem;
   overflow: auto;
-  padding: 1rem 1.1rem;
+  padding: 1.1rem 1.2rem;
   background: var(--color-paper-flat);
-  border: 2px solid var(--color-kraft-dark);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  line-height: 1.6;
+  border: var(--rule);
+  box-shadow: var(--shadow-tag-soft);
+  font-family: var(--font-sans);
+  font-size: var(--t-md);
+  line-height: 1.65;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
@@ -169,15 +130,47 @@
   .button {
     min-height: 2.75rem;
   }
-  .file {
-    width: 100%;
-    min-height: 2.75rem;
+  .preview {
+    padding: 0.9rem 1rem;
+    max-height: 20rem;
   }
-  .refusal,
-  .skipped,
-  .pass,
-  .hint,
-  .status {
-    overflow-wrap: anywhere;
-  }
+}
+
+/* Shared vocabulary under this screen's class names. */
+.h2 {
+  composes: h2 from "../../ui.module.css";
+}
+
+.label {
+  composes: label from "../../ui.module.css";
+}
+
+.textarea {
+  composes: textarea from "../../ui.module.css";
+}
+
+.button {
+  composes: btn from "../../ui.module.css";
+}
+
+.status {
+  composes: status from "../../ui.module.css";
+}
+
+.refusal {
+  composes: notice from "../../ui.module.css";
+  composes: noticeAlert from "../../ui.module.css";
+}
+
+.skipped {
+  composes: notice from "../../ui.module.css";
+}
+
+.pass {
+  composes: notice from "../../ui.module.css";
+  composes: noticeQuiet from "../../ui.module.css";
+}
+
+.noticeTitle {
+  composes: noticeTitle from "../../ui.module.css";
 }

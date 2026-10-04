@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteDocumentAction } from "./actions";
+import ui from "../../ui.module.css";
 import styles from "./library.module.css";
 
 export function DeleteButton({
@@ -76,9 +77,9 @@ export function DeleteButton({
         </button>
       </div>
       {error && (
-        <p role="alert" className={styles.error}>
-          {error}
-        </p>
+        <div role="alert" className={`${ui.notice} ${ui.noticeAlert}`}>
+          <p>{error}</p>
+        </div>
       )}
     </div>
   );
