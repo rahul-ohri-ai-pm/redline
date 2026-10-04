@@ -147,7 +147,7 @@ export default function Home() {
 
         <section id="try" className={styles.finalCta}>
           <h2 className={styles.h2}>See what&rsquo;s actually in your lease.</h2>
-          <Link className={styles.ctaButton} href="/app">
+          <Link className={styles.ctaButton} href="/new">
             Try it on a document
           </Link>
           <p className={styles.disclaimer}>
